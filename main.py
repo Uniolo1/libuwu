@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 import sys
+import random
 from data import to
+
+stutter_chance = 6 # 1 in 6
 
 def case_replace(input: str, from_: str, to: str) -> str:
     def apply_case(src: str, replacement: str) -> str:
@@ -46,8 +49,15 @@ def uwuify(input: str) -> str:
             a.append(t)
             continue
 
+        cat = False
         if t.lower() in to:
             a.append(case_replace(t, t, to[t.lower()]))
+            cat = True
+
+        if random.randint(1, stutter_chance) == 1:
+            t = f"{t[0]}-{t}"
+
+        if cat:
             continue
 
         t = cr(t, "r", "w")
