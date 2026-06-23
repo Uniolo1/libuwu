@@ -45,14 +45,14 @@ cr = case_replace
 def uwuify(input: str) -> str:
     a = []
     for t in input.split(' '):
-        if '://' in t:
-            a.append(t)
-            continue
 
         cat = False
         if t.lower() in to:
             t = case_replace(t, t, to[t.lower()])
             cat = True
+        elif '://' in t:
+            a.append(t)
+            continue
 
         if random.randint(1, stutter_chance) == 1:
             t = f"{t[0]}-{t}"
