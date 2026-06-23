@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export PYTHONUTF8=1
+SOURCE="$0"
+while [ -L "$SOURCE" ]; do
+	SOURCE="$(readlink "$SOURCE")"
+done
+cd "$(dirname "$SOURCE")"
+
+python3 ./main.py "$@"
+exit "$?"
