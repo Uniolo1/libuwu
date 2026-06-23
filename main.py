@@ -6,6 +6,7 @@ from data import to
 
 stutter_chance = 6 # 1 in 6
 
+# case insensitive substitution
 def case_replace(input: str, from_: str, to: str) -> str:
     def apply_case(src: str, replacement: str) -> str:
         if not src:
@@ -46,7 +47,7 @@ def uwuify(input: str) -> str:
     a = []
     for t in input.split(' '):
 
-        cat = False
+        cat = False # 'cat' stands for continue after <I already forgot>
         if t.lower() in to:
             t = case_replace(t, t, to[t.lower()])
             cat = True
