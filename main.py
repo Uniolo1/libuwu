@@ -103,7 +103,7 @@ if __name__ == "__main__":
             text.append(i)
 
     if len(text) == 0:
-        print("Usage: uwuify <text> [-s <studder percent (1 in X)>]")
+        print("Usage: uwuify <text>")
         sys.exit(1)
 
     print(uwuify(" ".join(text)))
