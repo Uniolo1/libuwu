@@ -76,7 +76,17 @@ if __name__ == "__main__":
     for i in sys.argv[1:]:
         if flag != None:
             if flag in ["-s", "--studder"]:
-                stutter_chance = int(i)
+                try:
+                    if float(i) % 1 != 0:
+                        print("Expected a integer")
+                        sys.exit(1)
+                    stutter_chance = int(i)
+                    if stutter_chance < 1:
+                        print("Expected a number greater than or equal to '1'")
+                        sys.exit(1)
+                except ValueError:
+                    print("Expected a valid integer")
+                    sys.exit(1)
             else:
                 print(f"Unknown flag of '{flag}'")
                 sys.exit(1)
