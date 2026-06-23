@@ -6,6 +6,10 @@ from data import to
 
 stutter_chance = 6 # 1 in 6
 
+# print to stderr
+def eprint(*args, sep=' ', end='\n', flush=False):
+    print(*args, sep=sep, end=end, flush=flush, file=sys.stderr)
+
 # case insensitive substitution
 def case_replace(input: str, from_: str, to: str) -> str:
     def apply_case(src: str, replacement: str) -> str:
@@ -55,8 +59,9 @@ def uwuify(input: str) -> str:
             a.append(t)
             continue
 
-        if random.randint(1, stutter_chance) == 1:
-            t = f"{t[0]}-{t}"
+        if stutter_chance != 0:
+            if random.randint(1, stutter_chance) == 1:
+                t = f"{t[0]}-{t}"
 
         if cat:
             a.append(t)
@@ -79,14 +84,14 @@ if __name__ == "__main__":
             if flag in ["-s", "--studder"]:
                 try:
                     if float(i) % 1 != 0:
-                        print("Expected a integer")
+                        eprint("Expected a integer")
                         sys.exit(1)
                     stutter_chance = int(i)
-                    if stutter_chance < 1:
-                        print("Expected a number greater than or equal to '1'")
+                    if stutter_chance < 0:
+                        eprint("Expected a number greater than or equal to '0'")
                         sys.exit(1)
                 except ValueError:
-                    print("Expected a valid integer")
+                    eprint("Expected a valid integer")
                     sys.exit(1)
             else:
                 print(f"Unknown flag of '{flag}'")
@@ -96,5 +101,9 @@ if __name__ == "__main__":
             flag = i
         else:
             text.append(i)
+
+    if len(text) == 0:
+        print("Usage: uwuify <text> [-s <studder percent (1 in X)>]")
+        sys.exit(1)
 
     print(uwuify(" ".join(text)))
