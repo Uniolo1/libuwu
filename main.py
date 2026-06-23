@@ -51,13 +51,14 @@ def uwuify(input: str) -> str:
 
         cat = False
         if t.lower() in to:
-            a.append(case_replace(t, t, to[t.lower()]))
+            t = case_replace(t, t, to[t.lower()])
             cat = True
 
         if random.randint(1, stutter_chance) == 1:
             t = f"{t[0]}-{t}"
 
         if cat:
+            a.append(t)
             continue
 
         t = cr(t, "r", "w")
@@ -67,4 +68,22 @@ def uwuify(input: str) -> str:
 
     return " ".join(a)
 
-print(uwuify(sys.argv[1]))
+#print(uwuify(sys.argv[1]))
+if __name__ == "__main__":
+    flag = None
+    text = []
+
+    for i in sys.argv[1:]:
+        if flag != None:
+            if flag in ["-s", "--studder"]:
+                stutter_chance = int(i)
+            else:
+                print(f"Unknown flag of '{flag}'")
+                sys.exit(1)
+            flag = None
+        elif i.startswith('-'):
+            flag = i
+        else:
+            text.append(i)
+
+    print(uwuify(" ".join(text)))
