@@ -2,6 +2,9 @@
 
 import sys
 import random
+import readline
+import os
+import atexit
 from data import to
 
 stutter_chance = 6 # 1 in 6
@@ -76,6 +79,16 @@ def uwuify(input: str) -> str:
 
 #print(uwuify(sys.argv[1]))
 if __name__ == "__main__":
+    # setup history file
+    hf = os.path.expanduser("~/.uwuify")
+    if os.path.isfile(hf):
+        readline.read_history_file(hf)
+
+    # save history file atexit
+    def save_history():
+        readline.write_history_file(hf)
+    atexit.register(save_history)
+
     flag = None
     text = []
 
@@ -103,7 +116,8 @@ if __name__ == "__main__":
             text.append(i)
 
     if len(text) == 0:
-        print("Usage: uwuify <text>")
-        sys.exit(1)
+        while True:
+            print(uwuify(input('>>> ')))
+
 
     print(uwuify(" ".join(text)))
