@@ -117,7 +117,10 @@ if __name__ == "__main__":
 
     if len(text) == 0:
         while True:
-            print(uwuify(input('>>> ')))
-
+            try:
+                print(uwuify(input('>>> ')))
+            except (KeyboardInterrupt, EOFError):
+                print("\n", end="")
+                sys.exit(0)
 
     print(uwuify(" ".join(text)))
