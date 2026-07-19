@@ -63,7 +63,7 @@ def uwuify(input: str) -> str:
             continue
 
         if stutter_chance != 0:
-            if random.randint(1, stutter_chance) == 1:
+            if random.randint(1, stutter_chance) == 1 and len(t) > 0:
                 t = f"{t[0]}-{t}"
 
         if cat:
