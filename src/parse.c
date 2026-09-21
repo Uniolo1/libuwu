@@ -52,6 +52,7 @@ char *uwuify_string(char *input) {
 	return output;
 }
 
+// FIXME: Punctuation breaks this
 char *replace_string(char *input) {
 	// WARNING: Only return strings with a length <= that of the input
 	if (strcmp(input, "love") == 0) return "wuv";
@@ -62,6 +63,7 @@ char *replace_string(char *input) {
 	if (strcmp(input, "angry") == 0) return "angi";
 	return NULL;
 }
+
 char replace_char(char input) {
 	switch (input) {
 		case 'r':
