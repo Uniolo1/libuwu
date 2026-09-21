@@ -10,6 +10,6 @@
 
 char replace_char(char input);
 char *uwuify_string(char *input);
-char *replace_string(char *input);
+char *replace_string(const char *input);
 
 #endif

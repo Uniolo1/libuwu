@@ -52,16 +52,49 @@ char *uwuify_string(char *input) {
 	return output;
 }
 
-// FIXME: Punctuation breaks this
-char *replace_string(char *input) {
-	// WARNING: Only return strings with a length <= that of the input
-	if (strcmp(input, "love") == 0) return "wuv";
-	if (strcmp(input, "small") == 0) return "smol";
-	if (strcmp(input, "this") == 0) return "dis";
-	if (strcmp(input, "windows") == 0) return "wuduws";
-	if (strcmp(input, "boy") == 0) return "boi";
-	if (strcmp(input, "angry") == 0) return "angi";
-	return NULL;
+// NOTE: AI was used here after struggling for ~30 minutes to fix an issue!
+// Said issue was punctuation like periods breaking the replacement algorithm.
+char *replace_string(const char *input) {
+	static char *output = NULL;
+
+	size_t len = strlen(input);
+	size_t word_len = len;
+
+	if (len > 0 && (input[len - 1] == '.' || input[len - 1] == ',' ||
+	                input[len - 1] == '?' || input[len - 1] == '!')) {
+		word_len--;
+	}
+
+	const char *replacement = NULL;
+
+	// WARNING: the length of the replacement must be <= that of the input
+	if (word_len == 4 && strncmp(input, "love", word_len) == 0)
+		replacement = "wuv";
+	else if (word_len == 5 && strncmp(input, "small", word_len) == 0)
+		replacement = "smol";
+	else if (word_len == 4 && strncmp(input, "this", word_len) == 0)
+		replacement = "dis";
+	else if (word_len == 7 && strncmp(input, "windows", word_len) == 0)
+		replacement = "wuduws";
+	else if (word_len == 3 && strncmp(input, "boy", word_len) == 0)
+		replacement = "boi";
+	else if (word_len == 5 && strncmp(input, "angry", word_len) == 0)
+		replacement = "angi";
+
+	if (!replacement) return NULL;
+
+	size_t replacement_len = strlen(replacement);
+
+	free(output);
+	output = malloc(replacement_len + (len - word_len) + 1);
+
+	if (!output) return NULL;
+
+	memcpy(output, replacement, replacement_len);
+	memcpy(output + replacement_len, input + word_len, len - word_len);
+	output[replacement_len + (len - word_len)] = '\0';
+
+	return output;
 }
 
 char replace_char(char input) {
