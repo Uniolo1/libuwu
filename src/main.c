@@ -6,31 +6,28 @@
 
 #include "parse.h"
 
-// Found on stackoverflow. This function was already in the public domain.
-// Thanks Will Hartung!
+// Found on stackoverflow (modifed it). This function was already in the public
+// domain, thought it did not have any comments and I changed some of the
+// formatting. Thanks Will Hartung!
 size_t sof_getline(char **lineptr, size_t *n, FILE *stream) {
 	char *bufptr = NULL;
 	char *p = bufptr;
 	size_t size;
 	int c;
 
-	if (lineptr == NULL) {
-		return -1;
-	}
-	if (stream == NULL) {
-		return -1;
-	}
-	if (n == NULL) {
-		return -1;
-	}
+	// ensure none of the arguments are NULL
+	if (lineptr == NULL) return -1;
+	if (stream == NULL) return -1;
+	if (n == NULL) return -1;
+
 	bufptr = *lineptr;
 	size = *n;
 
 	c = fgetc(stream);
-	if (c == EOF) {
-		return -1;
-	}
+	if (c == EOF) return -1;
+
 	if (bufptr == NULL) {
+		// allocate the bufptr if it is NULL
 		bufptr = malloc(128);
 		if (bufptr == NULL) {
 			return -1;
@@ -38,6 +35,7 @@ size_t sof_getline(char **lineptr, size_t *n, FILE *stream) {
 		size = 128;
 	}
 	p = bufptr;
+
 	while (c != EOF) {
 		if ((p - bufptr) > (size - 1)) {
 			size = size + 128;
@@ -60,23 +58,33 @@ size_t sof_getline(char **lineptr, size_t *n, FILE *stream) {
 	return p - bufptr - 1;
 }
 
-void uwuify(void) {
+int uwuify(void) {
 	char *line = NULL;
 	size_t size = 0;
+	int ret = 0;
 
 	while (1) {
 		printf(">>> ");
 
 		size_t length = sof_getline(&line, &size, stdin);
 
-		if (length == -1) {
-			break; // EOF
+		if (length <= 0) {
+			ret = 3;
+			break;
 		}
 
-		printf("%s", uwuify_string(line));
+		if (line[0] == '\n' || line[0] == '\0') break;
+
+		char *uwuified = uwuify_string(line);
+		if (uwuified == NULL) {
+			ret = 2;
+			break;
+		}
+		printf("%s", uwuified);
 	}
 
 	free(line);
+	return ret;
 }
 
 char *uwuify_text(char *input) { return uwuify_string(input); }
@@ -86,8 +94,8 @@ int main(int argc, char *argv[]) {
 	switch (argc) {
 		case 0:
 		case 1:
-			uwuify();
-			return 3; // uwuify should never exit
+			return uwuify();
+			break;
 		case 2:
 			text = uwuify_text(argv[1]);
 			if (text == NULL) return 2;

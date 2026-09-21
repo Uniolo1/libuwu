@@ -15,6 +15,7 @@ char *uwuify_string(char *input) {
 		return NULL;
 	}
 
+	// ensure output is always NULL-Terminated
 	output[0] = '\0';
 
 	bool add_space = false;
