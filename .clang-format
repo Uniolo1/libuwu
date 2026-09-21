@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: Unlicense
+BasedOnStyle: Google
+
+IndentWidth: 8
+TabWidth: 8
+ColumnLimit: 80
+
+# UseTab: Never
+UseTab: ForIndentation
+
+SpacesBeforeTrailingComments: 1 # 1 comment before trailing comments
+
+# C/C++
+PointerAlignment: Right
+SortIncludes: true
