@@ -4,6 +4,8 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-char uwu_uwuify_char(char input);
+#include "uwuify.h"
+
+char *uwu_uwuify_text(uwuify_instance *instance, char *input);
 
 #endif

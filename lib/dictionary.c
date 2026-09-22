@@ -20,7 +20,7 @@ static unsigned long djb2_hash(const char *str) {
 }
 
 // Initialize the dictionary
-Dictionary *dict_create(size_t initial_capacity) {
+Dictionary *uwu_dict_create(size_t initial_capacity) {
 	Dictionary *dict = malloc(sizeof(Dictionary));
 	if (!dict) return NULL;
 
@@ -35,7 +35,7 @@ Dictionary *dict_create(size_t initial_capacity) {
 	return dict;
 }
 
-static int dict_resize(Dictionary *dict, size_t new_capacity) {
+static int uwu_dict_resize(Dictionary *dict, size_t new_capacity) {
 	Node **old_buckets = dict->buckets;
 	size_t old_capacity = dict->capacity;
 
@@ -51,7 +51,7 @@ static int dict_resize(Dictionary *dict, size_t new_capacity) {
 	for (size_t i = 0; i < old_capacity; i++) {
 		Node *curr = old_buckets[i];
 		while (curr) {
-			dict_set(dict, curr->key, curr->value);
+			uwu_dict_set(dict, curr->key, curr->value);
 			Node *temp = curr;
 			curr = curr->next;
 			free(temp->key);
@@ -64,10 +64,10 @@ static int dict_resize(Dictionary *dict, size_t new_capacity) {
 }
 
 // Insert or update a key-value pair
-int dict_set(Dictionary *dict, const char *key, const char *value) {
+int uwu_dict_set(Dictionary *dict, const char *key, const char *value) {
 	// Resize if load factor exceeds 0.75
 	if ((float)dict->size / dict->capacity > 0.75) {
-		if (dict_resize(dict, dict->capacity * 2)) return 1;
+		if (uwu_dict_resize(dict, dict->capacity * 2)) return 1;
 	}
 
 	unsigned long slot = djb2_hash(key) % dict->capacity;
@@ -96,7 +96,7 @@ int dict_set(Dictionary *dict, const char *key, const char *value) {
 }
 
 // Retrieve a value by key (returns NULL if not found)
-char *dict_get(Dictionary *dict, const char *key) {
+char *uwu_dict_get(Dictionary *dict, const char *key) {
 	unsigned long slot = djb2_hash(key) % dict->capacity;
 	Node *curr = dict->buckets[slot];
 
@@ -110,7 +110,7 @@ char *dict_get(Dictionary *dict, const char *key) {
 }
 
 // Free all memory associated with the dictionary
-void dict_free(Dictionary *dict) {
+void uwu_dict_free(Dictionary *dict) {
 	if (!dict) return;
 	for (size_t i = 0; i < dict->capacity; i++) {
 		Node *curr = dict->buckets[i];

@@ -26,17 +26,19 @@ typedef struct {
 	bool initalized;
 } uwuify_instance;
 
-extern const char *uwu_INFO;      // string with info, 1 line.
-extern const uint16_t version[3]; // Version info
+extern const char *uwu_INFO;          // string with info, 1 line.
+extern const uint16_t uwu_VERSION[3]; // Version info
 
 #define DEFAULT_STUTTER_CHANCE 12 // 1 in 12
 
-void uwu_init(uwuify_instance
-                  *instance); // initalizes stuff like the replacment dictionary
+uint8_t uwu_init(uwuify_instance *instance); // initalizes stuff like the
+                                             // replacment dictionary
 void uwu_close(
     uwuify_instance *instance); // closes the replacement dictionary and stuff
 
-char *uwu_uwuify(const char *input);
+char *uwu_uwuify(uwuify_instance *instance, char *input);
+
+void uwu_update_stutter_chance(uwuify_instance *instance, uint8_t new_chance);
 
 // replacement dictionary:
 uint8_t uwu_replacement_remove(uwuify_instance *instance, const char *item);

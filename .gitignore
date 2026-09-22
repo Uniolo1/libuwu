@@ -2,3 +2,9 @@
 # SPDX-License-Identifier: Unlicense
 
 out
+*.o
+*.exe
+*.dll
+*.a
+*.so
+*.so.1
