@@ -1,9 +1,4 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#ifndef PARSE_H
-#define PARSE_H
-
-char uwuify_char(char input);
-
-#endif
+#include "../libuwuify.h"
