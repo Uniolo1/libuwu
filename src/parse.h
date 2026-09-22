@@ -4,6 +4,6 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-char uwuify_char(char input);
+char uwu_uwuify_char(char input);
 
 #endif
