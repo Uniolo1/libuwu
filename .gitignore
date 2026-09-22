@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Unlicense
 
 out
+
+# just in case they were accidentally included
 *.o
 *.exe
 *.dll
