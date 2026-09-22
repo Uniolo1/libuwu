@@ -72,20 +72,22 @@ char *replace_string(const char *input) {
 		replacement = "wuv";
 	if (word_len == 5 && strncmp(input, "loved", word_len) == 0)
 		replacement = "wuved";
-	else if (word_len == 5 && strncmp(input, "small", word_len) == 0)
+	if (word_len == 5 && strncmp(input, "small", word_len) == 0)
 		replacement = "smol";
-	else if (word_len == 4 && strncmp(input, "this", word_len) == 0)
+	if (word_len == 4 && strncmp(input, "this", word_len) == 0)
 		replacement = "dis";
-	else if (word_len == 7 && strncmp(input, "windows", word_len) == 0)
+	if (word_len == 7 && strncmp(input, "windows", word_len) == 0)
 		replacement = "wuduws";
-	else if (word_len == 3 && strncmp(input, "boy", word_len) == 0)
+	if (word_len == 3 && strncmp(input, "boy", word_len) == 0)
 		replacement = "boi";
-	else if (word_len == 5 && strncmp(input, "angry", word_len) == 0)
+	if (word_len == 5 && strncmp(input, "angry", word_len) == 0)
 		replacement = "angi";
-	else if (word_len == 3 && strncmp(input, "guh", word_len) == 0)
+	if (word_len == 3 && strncmp(input, "guh", word_len) == 0)
 		replacement = "buh";
-	else if (word_len == 2 && strncmp(input, ":)", word_len) == 0)
+	if (word_len == 2 && strncmp(input, ":)", word_len) == 0)
 		replacement = ":3";
+	if (word_len == 5 && strncmp(input, "hello", word_len) == 0)
+		replacement = "hai";
 
 	if (!replacement) return NULL;
 
