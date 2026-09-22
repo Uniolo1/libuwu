@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: Unlicense
+
 #include <libuwuify.h>
 #include <stdio.h>
 
@@ -8,10 +11,10 @@ int main(int argc, char *argv[]) {
 		return 2;
 	}
 
-	// return value ignored
+	// return value is ignored here
 	uwu_replacement_load_defaults(&instance);
 
-	uwu_update_stutter_chance(&instance, 1);
+	uwu_update_stutter_chance(&instance, 24);
 
 	switch (argc) {
 		case 0:
@@ -22,7 +25,8 @@ int main(int argc, char *argv[]) {
 			break;
 		case 2:
 			char *out = uwu_uwuify(&instance, argv[1]);
-			if (out != NULL) printf("%s\n", out);
+			if (out == NULL) return 3;
+			printf("%s\n", out);
 			break;
 		default:
 			puts("Recived too many arguments!");

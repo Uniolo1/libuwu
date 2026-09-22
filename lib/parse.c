@@ -78,66 +78,87 @@ char *uwu_uwuify_text(uwuify_instance *instance, char *input) {
 	while (word != NULL) {
 		// logic for adding space between words
 		if (add_space) {
-			size_t output_len = strlen(output);
+			size_t len = strlen(output);
 
-			// append the space to 'output'
-			output[output_len] = ' ';
-			output[output_len + 1] = '\0';
-		} else
+			// Make room for the space
+			char *tmp = realloc(output, len + 2);
+			if (tmp == NULL) {
+				free(output);
+				return NULL;
+			}
+
+			output = tmp;
+			output[len] = ' ';
+			output[len + 1] = '\0';
+		} else {
 			add_space = true;
+		}
 
 		char *match = match_and_replace_string(instance, word);
-
 		bool stutter = do_stutter(instance, word);
 
 		if (match == NULL) {
 			for (int i = 0; word[i] != '\0'; i++) {
-				size_t output_len = strlen(output);
-
-				// append the character to 'output'
 				char character = uwuify_char(word[i]);
+				size_t len = strlen(output);
 
 				if (stutter) {
-					char *tmp =
-					    realloc(output, output_len + 3);
-					if (tmp != NULL) {
-						output = tmp;
-
-						output[output_len] = character;
-						output[output_len] = '-';
-						output[output_len] = '\0';
-						output_len = output_len + 3;
-					} else {
-						/* allocation failed; output
-						 * remains unchanged */
+					char *tmp = realloc(output, len + 3);
+					if (tmp == NULL) {
+						free(output);
+						return NULL;
 					}
+
+					output = tmp;
+					output[len] = character;
+					output[len + 1] = '-';
+					output[len + 2] = '\0';
 				}
 
-				output[output_len] = character;
-				output[output_len + 1] = '\0';
-			}
-		} else
+				// Append the normal character
+				len = strlen(output);
+				char *tmp = realloc(output, len + 2);
+				if (tmp == NULL) {
+					free(output);
+					return NULL;
+				}
 
-		    if (stutter) {
-			char *tmp = realloc(output, output_len + 3);
-			if (tmp != NULL) {
 				output = tmp;
-
-				output[output_len] = match[0];
-				output[output_len] = '-';
-				output[output_len] = '\0';
-				output_len = output_len + 3;
-			} else {
-				/* allocation failed; output
-				 * remains unchanged */
+				output[len] = character;
+				output[len + 1] = '\0';
 			}
-		}
+		} else {
+			if (stutter) {
+				size_t len = strlen(output);
 
-		// append the match
-		strcat(output, match);
+				char *tmp = realloc(output, len + 3);
+				if (tmp == NULL) {
+					free(output);
+					return NULL;
+				}
+
+				output = tmp;
+				output[len] = match[0];
+				output[len + 1] = '-';
+				output[len + 2] = '\0';
+			}
+
+			size_t len = strlen(output);
+			size_t match_len = strlen(match);
+
+			char *tmp = realloc(output, len + match_len + 1);
+			if (tmp == NULL) {
+				free(output);
+				return NULL;
+			}
+
+			output = tmp;
+			strcat(output, match);
+		}
 
 		// move onto next word
 		word = strtok(NULL, " ");
 	}
+
 	return output;
 }
