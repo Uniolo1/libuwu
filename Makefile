@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Unlicense
 
 CC     = cc
-CFLAGS = -std=c99 -Wall -Wextra -O2 -g
+CFLAGS = -std=c99 -Wall -Wextra -O2 -g -pedantic
 
 SRC    = $(wildcard src/*.c)
 OBJ    = $(patsubst src/%.c,out/obj/%.o,$(SRC))
