@@ -29,7 +29,7 @@ typedef struct {
 extern const char *uwu_INFO;          // string with info, 1 line.
 extern const uint16_t uwu_VERSION[3]; // Version info
 
-#define DEFAULT_STUTTER_CHANCE 12 // 1 in 12
+#define DEFAULT_STUTTER_CHANCE 24 // 1 in 12
 
 uint8_t uwu_init(uwuify_instance *instance); // initalizes stuff like the
                                              // replacment dictionary
