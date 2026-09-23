@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 
 	uwu_update_stutter_chance(&instance, 24);
 
+	char *out;
 	switch (argc) {
 		case 0:
 			puts("How???");
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]) {
 			printf("Usage: %s \"<input>\"", argv[0]);
 			break;
 		case 2:
-			char *out = uwu_uwuify(&instance, argv[1]);
+			out = uwu_uwuify(&instance, argv[1]);
 			if (out == NULL) return 3;
 			printf("%s\n", out);
 			break;
