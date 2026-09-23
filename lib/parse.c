@@ -65,6 +65,7 @@ static char *match_and_replace_string(uwuify_instance *instance,
 	return uwu_dict_get(instance->replacement_dictionary, input);
 }
 
+// NOTE: AI used here (in the string resizing logic)
 char *uwu_uwuify_text(uwuify_instance *instance, char *input) {
 	int output_len = strlen(input) + 1;
 	char *output = malloc(output_len);
