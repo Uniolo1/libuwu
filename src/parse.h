@@ -6,6 +6,6 @@
 
 #include "uwuify.h"
 
-char *uwu_uwuify_text(uwuify_instance *instance, char *input);
+char *uwu_uwuify_text(uwu_instance *instance, char *input);
 
 #endif

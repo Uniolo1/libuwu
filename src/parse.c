@@ -44,7 +44,7 @@ static inline bool is_first_character_multibyte(const char *input) {
 	return (c & 0x80) != 0;
 }
 
-static bool do_stutter(uwuify_instance *instance, char *string) {
+static bool do_stutter(uwu_instance *instance, char *string) {
 	if (is_first_character_multibyte(string)) return false;
 
 	switch (instance->stutter_chance) {
@@ -60,13 +60,13 @@ static bool do_stutter(uwuify_instance *instance, char *string) {
 
 // TODO: Make matching somewhat case-insensitive (preserve case to the greatest
 // extent possible)
-static inline char *match_and_replace_string(uwuify_instance *instance,
+static inline char *match_and_replace_string(uwu_instance *instance,
                                              const char *input) {
 	return uwu_dict_get(instance->replacement_dictionary, input);
 }
 
 // NOTE: AI used here (in the string resizing logic)
-char *uwu_uwuify_text(uwuify_instance *instance, char *input) {
+char *uwu_uwuify_text(uwu_instance *instance, char *input) {
 	int output_len = strlen(input) + 1;
 	char *output = malloc(output_len);
 

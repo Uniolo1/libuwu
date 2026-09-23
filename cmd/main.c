@@ -1,13 +1,13 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#include <libuwuify.h>
+#include <libuwu.h>
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-	uwuify_instance instance;
+	uwu_instance instance;
 	if (uwu_init(&instance)) {
-		puts("Failed to initalize libuwuify");
+		puts("Failed to initalize libuwu");
 		return 2;
 	}
 

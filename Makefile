@@ -6,13 +6,13 @@ CFLAGS  := -Wall -Wextra -pedantic -O2
 AR      := ar
 ARFLAGS := rcs
 
-LIB_NAME := libuwuify
+LIB_NAME := libuwu
 
 OUT      := out
 OBJ_DIR  := $(OUT)/o
 
-LIB_SRCS := $(wildcard lib/*.c)
-LIB_OBJS := $(patsubst lib/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
+LIB_SRCS := $(wildcard src/*.c)
+LIB_OBJS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
 
 .PHONY: library shared demo clean
 
@@ -32,13 +32,13 @@ $(OUT)/$(LIB_NAME).so.1: $(LIB_SRCS)
 	$(CC) $(CFLAGS) -fPIC -shared -Wl,-soname,$@ -o $@ $^
 
 # Compile library objects
-$(OBJ_DIR)/%.o: lib/%.c
+$(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Demo
 demo: $(OUT)/$(LIB_NAME).a
-	$(CC) --std=c99 cmd/main.c -I. -L$(OUT) -luwuify -o $(OUT)/uwuify
+	$(CC) --std=c99 cmd/main.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
 clean:

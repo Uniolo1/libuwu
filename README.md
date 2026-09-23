@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: NONE
 SPDX-License-Identifier: Unlicense
 -->
 
-# libuwuify
+# libuwu
 
 A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ANSI C99. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
 
@@ -26,9 +26,9 @@ int main(int argc, char *argv[]) {
 	printf("%s\n", uwu_INFO);
 
 	// initalize instance
-	uwuify_instance instance;
+	uwu_instance instance;
 	if (uwu_init(&instance)) {
-		puts("Failed to initalize libuwuify");
+		puts("Failed to initalize libuwu");
 		return 1;
 	}
 
