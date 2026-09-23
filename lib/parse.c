@@ -25,7 +25,7 @@ static char uwuify_char(char input) {
 	}
 }
 
-static uint64_t rng_next(uint64_t *state) {
+static inline uint64_t rng_next(uint64_t *state) {
 	uint64_t x = *state;
 
 	x ^= x >> 12;
@@ -37,7 +37,7 @@ static uint64_t rng_next(uint64_t *state) {
 	return x * UINT64_C(2685821657736338717);
 }
 
-static bool is_first_character_multibyte(const char *input) {
+static inline bool is_first_character_multibyte(const char *input) {
 	unsigned char c;
 	c = (unsigned char)input[0];
 
@@ -60,8 +60,8 @@ static bool do_stutter(uwuify_instance *instance, char *string) {
 
 // TODO: Make matching somewhat case-insensitive (preserve case to the greatest
 // extent possible)
-static char *match_and_replace_string(uwuify_instance *instance,
-                                      const char *input) {
+static inline char *match_and_replace_string(uwuify_instance *instance,
+                                             const char *input) {
 	return uwu_dict_get(instance->replacement_dictionary, input);
 }
 
