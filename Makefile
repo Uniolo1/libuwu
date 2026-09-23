@@ -13,8 +13,9 @@ OBJ_DIR  := $(OUT)/o
 
 LIB_SRCS := $(wildcard src/*.c)
 LIB_OBJS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
+ANALYSIS_DIR := $(OUT)/analysis
 
-.PHONY: library shared demo clean
+.PHONY: library shared demo clean analyze
 
 # Default target
 library: $(OUT)/$(LIB_NAME).a
@@ -40,6 +41,11 @@ $(OBJ_DIR)/%.o: src/%.c
 demo: $(OUT)/$(LIB_NAME).a
 	$(CC) --std=c99 cmd/main.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
+
+# analyze - depends on clang-analyzer (scan-build)
+analyze:
+	@rm -rf $(ANALYSIS_DIR)
+	scan-build -o $(ANALYSIS_DIR) --status-bugs $(MAKE) -B library
 
 clean:
 	rm -rf $(OUT)
