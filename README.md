@@ -7,9 +7,13 @@ SPDX-License-Identifier: Unlicense
 
 A C version of [owoify-py](https://pypi.org/project/owoify-py/). Currently quite limited.
 
+## building
+
+Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make demo` to compile the demo! This library should also work on Windows but you will have to compile it manually.
+
 ## uwuify
 
-Stored in `cmd/`, an example program that uses `libuwuify`.
+Demo program. Stored in `cmd/`, an example program that uses `libuwuify`.
 
 ## quickstart
 
