@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	uwu_instance instance;
 	if (uwu_init(&instance))
 	{
-		puts("Failed to initalize libuwu");
+		uwu_perrwu(&instance, "Failed to initalize libuwu");
 		return 2;
 	}
 
@@ -31,7 +31,10 @@ int main(int argc, char *argv[])
 	case 2:
 		out = uwu_uwuify(&instance, argv[1]);
 		if (out == NULL)
+		{
+			uwu_perrwu(&instance, "uwuify");
 			return 3;
+		}
 		printf("%s\n", out);
 		break;
 	default:

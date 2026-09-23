@@ -7,20 +7,23 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef struct Node {
+typedef struct Node
+{
 	char *key;
 	char *value;
 	struct Node *next;
 } Node;
 
-typedef struct {
+typedef struct
+{
 	Node **buckets;  // Array of linked list pointers
 	size_t capacity; // Total number of buckets
 	size_t size;     // Current number of elements
 } Dictionary;
 
 // uwu instance
-typedef struct {
+typedef struct
+{
 	uint8_t stutter_chance;
 	Dictionary *replacement_dictionary;
 	uint64_t rng;
@@ -42,7 +45,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
 
 // utilities:
 void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance);
-void uwu_print_errwu(char *input, uwu_instance *instance);
+void uwu_perrwu(uwu_instance *instance, char *input);
 
 // replacement dictionary:
 uint8_t uwu_replacement_remove(uwu_instance *instance, const char *item);

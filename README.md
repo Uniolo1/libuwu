@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 	// initalize instance
 	uwu_instance instance;
 	if (uwu_init(&instance)) {
-		puts("Failed to initalize libuwu");
+		uwu_perrwu(&instance, "Failed to initalize libuwu");
 		return 1;
 	}
 
@@ -41,14 +41,14 @@ int main(int argc, char *argv[]) {
 
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":)", ":3")) {
-		puts("Failed to set custom replacement!");
+		uwu_perrwu(&instance, "Failed to set custom replacement");
 		return 2;
 	}
 
 	// uwuify some text!
 	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :)");
 	if (output == NULL) {
-		puts("Failed to uwuify text!")
+		uwu_perrwu(&instance, "Failed to uwuify text")
 		return 3;
 	}
 

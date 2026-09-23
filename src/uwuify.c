@@ -56,7 +56,7 @@ void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance)
 	instance->stutter_chance = new_chance;
 }
 
-void uwu_print_errwu(char *input, uwu_instance *instance)
+void uwu_perrwu(uwu_instance *instance, char *input)
 {
 	printf("%s: %s\n", input, instance->errwu);
 }
