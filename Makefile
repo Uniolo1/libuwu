@@ -7,10 +7,12 @@ AR      := ar
 ARFLAGS := rcs
 
 LIB_NAME := libuwuify
+
 OUT      := out
+OBJ_DIR  := $(OUT)/o
 
 LIB_SRCS := $(wildcard lib/*.c)
-LIB_OBJS := $(patsubst lib/%.c,$(OUT)/%.o,$(LIB_SRCS))
+LIB_OBJS := $(patsubst lib/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
 
 .PHONY: library shared demo clean
 
@@ -30,8 +32,8 @@ $(OUT)/$(LIB_NAME).so.1: $(LIB_SRCS)
 	$(CC) $(CFLAGS) -fPIC -shared -Wl,-soname,$@ -o $@ $^
 
 # Compile library objects
-$(OUT)/%.o: lib/%.c
-	@mkdir -p $(OUT)
+$(OBJ_DIR)/%.o: lib/%.c
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Demo
