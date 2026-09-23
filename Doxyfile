@@ -1,0 +1,9 @@
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = "libuwu"
+OUTPUT_DIRECTORY       = "out/doxygen"
+OUTPUT_LANGUAGE        = English
+TAB_SIZE               = 8
+INPUT                  = ./libuwu.h
+GENERATE_HTML          = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES
+HIDE_UNDOC_MEMBERS     = NO

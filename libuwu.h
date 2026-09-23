@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/** @cond INTERNAL */
+
 typedef struct Node
 {
 	char *key;
@@ -21,7 +23,12 @@ typedef struct
 	size_t size;     // Current number of elements
 } Dictionary;
 
-// uwu instance
+/** @endcond */
+
+/**
+ * @brief Struct containing information, passed along to various functions, with
+ * the exception of 'stutter_chance', do not modify manually.
+ */
 typedef struct
 {
 	uint8_t stutter_chance;
@@ -31,28 +38,110 @@ typedef struct
 	char *errwu;
 } uwu_instance;
 
-extern const char *uwu_INFO;          // string with info, 1 line.
-extern const uint16_t uwu_VERSION[3]; // Version info
+/**
+ * @brief Information string describing the libuwu version.
+ */
+extern const char *uwu_INFO;
 
-#define DEFAULT_STUTTER_CHANCE 24 // 1 in 12
+/**
+ * @brief Version number of the libuwu library.
+ *
+ * [0] = breaking
+ * [1] = release
+ * [2] = patch
+ *
+ * As long as the breaking release is the same, code and binaries made for an
+ * older release will be compatible with neweer releases.
+ */
+extern const uint16_t uwu_VERSION[3];
 
-uint8_t uwu_init(uwu_instance *instance); // initalizes stuff like the
-                                          // replacment dictionary
-void uwu_close(
-    uwu_instance *instance); // closes the replacement dictionary and stuff
+/**
+ * @brief Initalizes a uwu_instance
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return 0 on success, 1 in failure with errwu being set (on the uninitalized
+ * instance)
+ */
+uint8_t uwu_init(uwu_instance *instance);
 
+/**
+ * @brief Uninitalizes a uwu_instance
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return Nothing is returned, function is guaranteed to succeed!
+ */
+void uwu_close(uwu_instance *instance);
+
+/**
+ * @brief Uwuifies text
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return An uwuified string on success and NULL on error with errwu being set
+ * (see uwu_perrwu)
+ */
 char *uwu_uwuify(uwu_instance *instance, char *input);
 
-// utilities:
+/**
+ * @brief Updates the chances for a stutter
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param new_chance chance (1 in new_chance) for a stutter to occur
+ * @return Nothing is returned, function is guaranteed to succeed!
+ */
 void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance);
-void uwu_perrwu(uwu_instance *instance, char *input);
+
+/**
+ * @brief Prints errwu information, simalarly to perror. Outputs only messsage
+ * if errwu is unset.
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return Nothing is returned, function is guaranteed to succeed!
+ */
+void uwu_perrwu(uwu_instance *instance, char *messsage);
+
+/**
+ * @brief Clears errwu
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return Nothing is returned, function is guaranteed to succeed!
+ */
 void uwu_clear_errwu(uwu_instance *instance);
 
-// replacement dictionary:
-uint8_t uwu_replacement_remove(uwu_instance *instance, const char *item);
+/**
+ * @brief Removes item from replacement dictionary
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param key String containing key value of item to remove
+ * @return 0 on success, 1 in failure with errwu being set
+ */
+uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key);
+
+/**
+ * @brief Updates or adds item to replacement dictionary
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param key Text to replace
+ * @param value What the text is replaced with
+ * @return 0 on success, 1 in failure with errwu being set
+ */
 uint8_t uwu_replacement_update(uwu_instance *instance, const char *key,
                                const char *value);
+
+/**
+ * @brief Loads defaults
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @return 0 on success, 1 in failure with errwu being set
+ */
 uint8_t uwu_replacement_load_defaults(uwu_instance *instance);
+
+/**
+ * @brief Gets value of key in replacement dictionary
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param key The key that is being looked up.
+ * @return Returns the value or NULL if it is not found.
+ */
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key);
 
 #endif

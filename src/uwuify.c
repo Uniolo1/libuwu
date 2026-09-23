@@ -12,6 +12,7 @@
 
 const char *uwu_INFO = "libuwu v0.0.0";
 const uint16_t uwu_VERSION[3] = {0, 0, 0};
+#define DEFAULT_STUTTER_CHANCE 24 // 1 in 12
 
 static const uint8_t
     number_of_defaults; // used for determining default dictionary size
@@ -58,10 +59,10 @@ void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance)
 	instance->stutter_chance = new_chance;
 }
 
-void uwu_perrwu(uwu_instance *instance, char *input)
+void uwu_perrwu(uwu_instance *instance, char *messsage)
 {
 	// basically just perror but libuwu, ensures errwu is not NULL.
-	printf("%s:", input);
+	printf("%s:", messsage);
 	if (instance->errwu != NULL)
 		printf(" %s", instance->errwu);
 	printf("\n");
