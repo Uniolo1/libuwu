@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Unlicense
 
 CC      := gcc
-CFLAGS  := -Wall -Wextra -pedantic -O2 -g -fno-omit-frame-pointer
+CFLAGS  := -Wall -Wextra -pedantic -O2 -g -fno-omit-frame-pointer -D_ISOC99_SOURCE
 AR      := ar
 ARFLAGS := rcs
 
