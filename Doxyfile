@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: NONE
+# SPDX-License-Identifier: Unlicense
+
+# WARNING: broken currently :(
+
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "libuwu"
 OUTPUT_DIRECTORY       = "out/doxygen"
