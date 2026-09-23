@@ -28,6 +28,9 @@ typedef struct
 /**
  * @brief Struct containing information, passed along to various functions, with
  * the exception of 'stutter_chance', do not modify manually.
+ *
+ * Must be initalized with 'uwu_init(&instance)', NEVER use an uninitalized
+ * instance!
  */
 typedef struct
 {
@@ -56,7 +59,7 @@ extern const char *uwu_INFO;
 extern const uint16_t uwu_VERSION[3];
 
 /**
- * @brief Initalizes a uwu_instance
+ * @brief Initalizes a uwu_instance.
  *
  * @param instance Pointer to a uwu_instance struct
  * @return 0 on success, 1 in failure with errwu being set (on the uninitalized
@@ -65,7 +68,7 @@ extern const uint16_t uwu_VERSION[3];
 uint8_t uwu_init(uwu_instance *instance);
 
 /**
- * @brief Uninitalizes a uwu_instance
+ * @brief Uninitalizes an uwu_instance.
  *
  * @param instance Pointer to a uwu_instance struct
  * @return Nothing is returned, function is guaranteed to succeed!

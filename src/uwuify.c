@@ -20,6 +20,7 @@ static const uint8_t
 uint8_t uwu_init(uwu_instance *instance)
 {
 	if (instance->initalized)
+		// close and then reinitalize
 		uwu_close(instance);
 
 	instance->replacement_dictionary =
@@ -96,7 +97,7 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 	return 0;
 }
 
-static const uint8_t number_of_defaults = 8;
+static const uint8_t number_of_defaults = 9;
 static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
 	if (uwu_dict_set(instance->replacement_dictionary, "love", "wuv"))
@@ -114,6 +115,8 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 	if (uwu_dict_set(instance->replacement_dictionary, "guh", "buh"))
 		return 1;
 	if (uwu_dict_set(instance->replacement_dictionary, "boy", "boi"))
+		return 1;
+	if (uwu_dict_set(instance->replacement_dictionary, "error", "errwu"))
 		return 1;
 
 	return 0;

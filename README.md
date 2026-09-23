@@ -21,33 +21,40 @@ A demo program, stored in `cmd/`.
 #include <libuwuify.h>
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	// print quick information about the library
 	printf("%s\n", uwu_INFO);
 
 	// initalize instance
 	uwu_instance instance;
-	if (uwu_init(&instance)) {
+	if (uwu_init(&instance))
+	{
 		uwu_perrwu(&instance, "Failed to initalize libuwu");
 		return 1;
 	}
 
 	// load default replacements
-	// return value can probably be safely ignored here (0 on success, 1 on failure)
-	uwu_replacement_load_defaults(&instance);
+	if (uwu_replacement_load_defaults(&instance))
+	{
+		uwu_perrwu(&instance, "Failed to load default replacement's");
+		return 2; // usally a good idea (but not required) to exit here
+	}
 
 	// chance the stutter chance to be 1 in every 18 messages
 	uwu_update_stutter_chance(&instance, 18);
 
 	// set customn replacement
-	if (uwu_replacement_update(&instance, ":)", ":3")) {
+	if (uwu_replacement_update(&instance, ":)", ":3"))
+	{
 		uwu_perrwu(&instance, "Failed to set custom replacement");
-		return 2;
+		uwu_clear_errwu(&instance); // don't exit but clear errwu still, incase an error that does not set errwu occurs.
 	}
 
 	// uwuify some text!
 	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :)");
-	if (output == NULL) {
+	if (output == NULL)
+	{
 		uwu_perrwu(&instance, "Failed to uwuify text")
 		return 3;
 	}

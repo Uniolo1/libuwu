@@ -9,6 +9,7 @@
 #include "dictionary.h"
 #include "uwuify.h"
 
+// replace r and l with w
 static char uwuify_char(char input)
 {
 	switch (input)
@@ -27,6 +28,7 @@ static char uwuify_char(char input)
 	}
 }
 
+// xorshift64* Marsaglia/Vigna-style variant
 static inline uint64_t rng_next(uint64_t *state)
 {
 	uint64_t x = *state;
