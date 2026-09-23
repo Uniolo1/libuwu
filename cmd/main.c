@@ -4,9 +4,11 @@
 #include <libuwu.h>
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	uwu_instance instance;
-	if (uwu_init(&instance)) {
+	if (uwu_init(&instance))
+	{
 		puts("Failed to initalize libuwu");
 		return 2;
 	}
@@ -17,22 +19,24 @@ int main(int argc, char *argv[]) {
 	uwu_update_stutter_chance(&instance, 24);
 
 	char *out;
-	switch (argc) {
-		case 0:
-			puts("How???");
-			break;
-		case 1:
-			printf("%s\n", uwu_INFO);
-			printf("Usage: %s \"<input>\"", argv[0]);
-			break;
-		case 2:
-			out = uwu_uwuify(&instance, argv[1]);
-			if (out == NULL) return 3;
-			printf("%s\n", out);
-			break;
-		default:
-			puts("Recived too many arguments!");
-			break;
+	switch (argc)
+	{
+	case 0:
+		puts("How???");
+		break;
+	case 1:
+		printf("%s\n", uwu_INFO);
+		printf("Usage: %s \"<input>\"", argv[0]);
+		break;
+	case 2:
+		out = uwu_uwuify(&instance, argv[1]);
+		if (out == NULL)
+			return 3;
+		printf("%s\n", out);
+		break;
+	default:
+		puts("Recived too many arguments!");
+		break;
 	}
 	return 0;
 }

@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: NONE
 # SPDX-License-Identifier: Unlicense
 
-BasedOnStyle: Google
+BasedOnStyle: Microsoft
 
 IndentWidth: 8
 TabWidth: 8
