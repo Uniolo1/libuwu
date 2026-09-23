@@ -46,6 +46,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
 // utilities:
 void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance);
 void uwu_perrwu(uwu_instance *instance, char *input);
+void uwu_clear_errwu(uwu_instance *instance);
 
 // replacement dictionary:
 uint8_t uwu_replacement_remove(uwu_instance *instance, const char *item);

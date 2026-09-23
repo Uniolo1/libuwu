@@ -32,11 +32,13 @@ uint8_t uwu_init(uwu_instance *instance)
 
 	instance->stutter_chance = DEFAULT_STUTTER_CHANCE;
 	instance->rng = (uint64_t)time(NULL);
+	instance->errwu = NULL;
 
 	instance->initalized = true;
 	return 0;
 }
 
+// WARNING: any instance that is closed must be re-initalized!
 void uwu_close(uwu_instance *instance)
 {
 	uwu_dict_free(instance->replacement_dictionary);
@@ -58,7 +60,16 @@ void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance)
 
 void uwu_perrwu(uwu_instance *instance, char *input)
 {
-	printf("%s: %s\n", input, instance->errwu);
+	// basically just perror but libuwu, ensures errwu is not NULL.
+	printf("%s:", input);
+	if (instance->errwu != NULL)
+		printf(" %s", instance->errwu);
+	printf("\n");
+}
+
+void uwu_clear_errwu(uwu_instance *instance)
+{
+	instance->errwu = NULL;
 }
 
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key)
