@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "case.h"
 #include "dictionary.h"
 #include "uwuify.h"
 
@@ -62,22 +63,43 @@ static bool do_stutter(uwu_instance *instance, char *string)
 	case 1:
 		return true;
 	default:
-		return ((rng_next(&instance->rng) % instance->stutter_chance) ==
-		        0);
+		return ((rng_next(&instance->rng) % instance->stutter_chance) == 0);
 	}
 }
 
 // TODO: Make matching somewhat case-insensitive (preserve case to the greatest
 // extent possible)
-static inline char *match_and_replace_string(uwu_instance *instance,
-                                             const char *input)
+static inline char *match_and_replace_string(uwu_instance *instance, const char *input)
 {
-	return uwu_dict_get(instance->replacement_dictionary, input);
+	// this does not work:
+	/*
+	        char *ret = NULL;
+	        char *lower_input = uwu_strdup(input);
+
+	        if (lower_input != NULL)
+	        {
+	                uwu_make_lowercase(&lower_input);
+	                ret = uwu_dict_get(instance->replacement_dictionary, lower_input);
+	                free(lower_input);
+	        }
+	        else
+	        {
+	                // skip the lowercase step
+	                ret = uwu_dict_get(instance->replacement_dictionary, input);
+	        }
+
+	        uwu_transfer_case(input, &ret);
+	        return ret;
+	 */
+	// But this does? (assuming input is lowercase):
+	char *ret = uwu_dict_get(instance->replacement_dictionary, input);
+	uwu_transfer_case(input, &ret);
+	return ret;
 }
 
 // WARNING: AI used heavily here
-static inline bool ensure_output_capacity(char **output, size_t *capacity,
-                                          size_t length, size_t additional)
+static inline bool ensure_output_capacity(char **output, size_t *capacity, size_t length,
+                                          size_t additional)
 {
 	size_t required;
 	size_t new_capacity;
@@ -128,12 +150,10 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 	{
 		if (add_space)
 		{
-			if (!ensure_output_capacity(&output, &output_cap,
-			                            output_len, 1))
+			if (!ensure_output_capacity(&output, &output_cap, output_len, 1))
 			{
 				free(output);
-				instance->errwu =
-				    "failed to resize output string";
+				instance->errwu = "failed to resize output string";
 				return NULL;
 			}
 
@@ -158,14 +178,12 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 
 				if (stutter)
 				{
-					if (!ensure_output_capacity(
-					        &output, &output_cap,
-					        output_len, 2))
+					if (!ensure_output_capacity(&output, &output_cap,
+					                            output_len, 2))
 					{
 						free(output);
-						instance->errwu =
-						    "failed to resize output "
-						    "string";
+						instance->errwu = "failed to resize output "
+						                  "string";
 						return NULL;
 					}
 
@@ -175,14 +193,12 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 				}
 				else
 				{
-					if (!ensure_output_capacity(
-					        &output, &output_cap,
-					        output_len, 1))
+					if (!ensure_output_capacity(&output, &output_cap,
+					                            output_len, 1))
 					{
 						free(output);
-						instance->errwu =
-						    "failed to resize output "
-						    "string";
+						instance->errwu = "failed to resize output "
+						                  "string";
 						return NULL;
 					}
 
@@ -197,12 +213,11 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 
 			if (stutter)
 			{
-				if (!ensure_output_capacity(
-				        &output, &output_cap, output_len, 2))
+				if (!ensure_output_capacity(&output, &output_cap, output_len,
+				                            2))
 				{
 					free(output);
-					instance->errwu =
-					    "failed to resize output string";
+					instance->errwu = "failed to resize output string";
 					return NULL;
 				}
 
@@ -211,12 +226,11 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 				output[output_len] = '\0';
 			}
 
-			if (!ensure_output_capacity(&output, &output_cap,
-			                            output_len, match_len))
+			if (!ensure_output_capacity(&output, &output_cap, output_len,
+			                            match_len))
 			{
 				free(output);
-				instance->errwu =
-				    "failed to resize output string";
+				instance->errwu = "failed to resize output string";
 				return NULL;
 			}
 

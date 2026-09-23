@@ -6,9 +6,20 @@
 
 #include "dictionary.h"
 
+#include "case.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+char *uwu_strdup(const char *input)
+{
+	char *ret = malloc(strlen(input) + 1);
+	if (ret == NULL)
+		return NULL;
+
+	strcpy(ret, input);
+	return ret;
+}
 
 static unsigned long djb2_hash(const char *str)
 {
@@ -91,7 +102,9 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 		if (strcmp(curr->key, key) == 0)
 		{
 			free(curr->value);
-			curr->value = strdup(value);
+			curr->value = uwu_strdup(value);
+			uwu_make_lowercase(&curr->key);
+			uwu_make_lowercase(&curr->value);
 			return 0;
 		}
 		curr = curr->next;
@@ -102,8 +115,10 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 	if (!new_node)
 		return 1;
 
-	new_node->key = strdup(key);
-	new_node->value = strdup(value);
+	new_node->key = uwu_strdup(key);
+	uwu_make_lowercase(&new_node->key);
+	new_node->value = uwu_strdup(value);
+	uwu_make_lowercase(&new_node->value);
 	new_node->next = dict->buckets[slot];
 	dict->buckets[slot] = new_node;
 	dict->size++;
@@ -120,6 +135,7 @@ char *uwu_dict_get(Dictionary *dict, const char *key)
 	{
 		if (strcmp(curr->key, key) == 0)
 		{
+			uwu_make_lowercase(&curr->value);
 			return curr->value;
 		}
 		curr = curr->next;

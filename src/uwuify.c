@@ -14,8 +14,7 @@ const char *uwu_INFO = "libuwu v0.0.0";
 const uint16_t uwu_VERSION[3] = {0, 0, 0};
 #define DEFAULT_STUTTER_CHANCE 24 // 1 in 12
 
-static const uint8_t
-    number_of_defaults; // used for determining default dictionary size
+static const uint8_t number_of_defaults; // used for determining default dictionary size
 
 uint8_t uwu_init(uwu_instance *instance)
 {
@@ -23,8 +22,7 @@ uint8_t uwu_init(uwu_instance *instance)
 		// close and then reinitalize
 		uwu_close(instance);
 
-	instance->replacement_dictionary =
-	    uwu_dict_create(number_of_defaults + 1);
+	instance->replacement_dictionary = uwu_dict_create(number_of_defaults + 1);
 
 	if (instance->replacement_dictionary == NULL)
 	{
@@ -79,11 +77,9 @@ char *uwu_replacement_get_value(uwu_instance *instance, const char *key)
 	return uwu_dict_get(instance->replacement_dictionary, key);
 }
 
-uint8_t uwu_replacement_update(uwu_instance *instance, const char *key,
-                               const char *value)
+uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const char *value)
 {
-	uint8_t ret =
-	    uwu_dict_set(instance->replacement_dictionary, key, value);
+	uint8_t ret = uwu_dict_set(instance->replacement_dictionary, key, value);
 
 	if (ret != 0)
 		instance->errwu = "failed to allocate memory for new item";
@@ -97,7 +93,7 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 	return 0;
 }
 
-static const uint8_t number_of_defaults = 9;
+static const uint8_t number_of_defaults = 10;
 static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
 	if (uwu_dict_set(instance->replacement_dictionary, "love", "wuv"))
@@ -117,6 +113,8 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 	if (uwu_dict_set(instance->replacement_dictionary, "boy", "boi"))
 		return 1;
 	if (uwu_dict_set(instance->replacement_dictionary, "error", "errwu"))
+		return 1;
+	if (uwu_dict_set(instance->replacement_dictionary, "errors", "errwus"))
 		return 1;
 
 	return 0;
