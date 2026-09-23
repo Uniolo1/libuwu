@@ -58,6 +58,8 @@ static bool do_stutter(uwuify_instance *instance, char *string) {
 	}
 }
 
+// TODO: Make matching somewhat case-insensitive (preserve case to the greatest
+// extent possible)
 static char *match_and_replace_string(uwuify_instance *instance,
                                       const char *input) {
 	return uwu_dict_get(instance->replacement_dictionary, input);

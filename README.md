@@ -5,7 +5,7 @@ SPDX-License-Identifier: Unlicense
 
 # libuwuify
 
-A C version of [owoify-py](https://pypi.org/project/owoify-py/). Currently quite limited.
+A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ANSI C99.
 
 ## building
 
@@ -22,6 +22,8 @@ Demo program. Stored in `cmd/`, an example program that uses `libuwuify`.
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
+	// print quick information about the library
+	printf("%s\n", uwu_INFO);
 
 	// initalize instance
 	uwuify_instance instance;

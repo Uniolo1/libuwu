@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
 			puts("How???");
 			break;
 		case 1:
+			printf("%s\n", uwu_INFO);
 			printf("Usage: %s \"<input>\"", argv[0]);
 			break;
 		case 2:

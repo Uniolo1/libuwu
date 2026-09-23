@@ -9,7 +9,7 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwuify 0.0.0";
+const char *uwu_INFO = "libuwuify v0.0.0";
 const uint16_t uwu_VERSION[3] = {0, 0, 0};
 
 static const uint8_t
