@@ -5,7 +5,7 @@ SPDX-License-Identifier: Unlicense
 
 # libuwuify
 
-A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ANSI C99.
+A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ANSI C99. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
 
 ## building
 
@@ -13,7 +13,7 @@ Use `make` to compile to a static library, `make shared` to compile to a dynamic
 
 ## uwuify
 
-Demo program. Stored in `cmd/`, an example program that uses `libuwuify`.
+A demo program, stored in `cmd/`.
 
 ## quickstart
 
