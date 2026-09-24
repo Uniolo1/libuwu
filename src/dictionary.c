@@ -7,6 +7,7 @@
 #include "dictionary.h"
 
 #include "case.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,6 +28,7 @@ static unsigned long djb2_hash(const char *str)
 	int c;
 	while ((c = *str++))
 	{
+		c = tolower(c);
 		hash = ((hash << 5) + hash) + c; // hash * 33 + c
 	}
 	return hash;
@@ -133,7 +135,7 @@ char *uwu_dict_get(Dictionary *dict, const char *key)
 
 	while (curr)
 	{
-		if (strcmp(curr->key, key) == 0)
+		if (uwu_strcasecmp(curr->key, key) == 0)
 		{
 			uwu_make_lowercase(&curr->value);
 			return curr->value;

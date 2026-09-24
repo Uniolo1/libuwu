@@ -2,7 +2,7 @@
 
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdlib.h>
+#include <string.h>
 
 typedef enum uwu_Case
 {
@@ -38,6 +38,23 @@ static inline void make_uppercase(char **string)
 
 	for (p = *string; *p != '\0'; ++p)
 		make_upperchar(p);
+}
+
+int uwu_strcasecmp(const char *a, const char *b)
+{
+	while (*a && *b)
+	{
+		unsigned char ca = (unsigned char)toupper((unsigned char)*a);
+		unsigned char cb = (unsigned char)toupper((unsigned char)*b);
+
+		if (ca != cb)
+			return ca - cb;
+
+		a++;
+		b++;
+	}
+
+	return (unsigned char)*a - (unsigned char)*b;
 }
 
 static inline bool check_case(char ch)

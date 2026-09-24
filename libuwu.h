@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/** @cond INTERNAL */
+/// @cond INTERNAL
 
 typedef struct Node
 {
@@ -23,7 +23,7 @@ typedef struct
 	size_t size;     // Current number of elements
 } Dictionary;
 
-/** @endcond */
+/// @endcond
 
 /**
  * @brief Struct containing information, passed along to various functions, with
@@ -127,8 +127,7 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key);
  * @param value What the text is replaced with
  * @return 0 on success, 1 in failure with errwu being set
  */
-uint8_t uwu_replacement_update(uwu_instance *instance, const char *key,
-                               const char *value);
+uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const char *value);
 
 /**
  * @brief Loads defaults
