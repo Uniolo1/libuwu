@@ -1,3 +1,4 @@
+// the header file for defaults.c is shared with uwuify.c
 #include "uwuify.h"
 
 #include <stdint.h>
