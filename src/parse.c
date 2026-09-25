@@ -84,6 +84,9 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 	size_t new_capacity;
 	char *tmp;
 
+	if (additional > (size_t)-1 - length - 1)
+		return false;
+
 	required = length + additional + 1;
 
 	if (required <= *capacity)
@@ -93,6 +96,12 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 
 	while (new_capacity < required)
 	{
+		if (new_capacity > (size_t)-1 / 2)
+		{
+			new_capacity = required;
+			break;
+		}
+
 		new_capacity *= 2;
 	}
 
@@ -149,68 +158,61 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 
 		if (match == NULL)
 		{
+			size_t word_len = strlen(word);
+			size_t additional = stutter ? word_len * 2 : word_len;
 			size_t i;
 
-			for (i = 0; word[i] != '\0'; i++)
-			{
-				char character = uwuify_char(word[i]);
-
-				if (stutter)
-				{
-					if (!ensure_output_capacity(&output, &output_cap,
-					                            output_len, 2))
-					{
-						free(output);
-						instance->errwu = "failed to resize output "
-						                  "string";
-						return NULL;
-					}
-
-					output[output_len++] = character;
-					output[output_len++] = '-';
-					output[output_len] = '\0';
-				}
-				else
-				{
-					if (!ensure_output_capacity(&output, &output_cap,
-					                            output_len, 1))
-					{
-						free(output);
-						instance->errwu = "failed to resize output "
-						                  "string";
-						return NULL;
-					}
-
-					output[output_len++] = character;
-					output[output_len] = '\0';
-				}
-			}
-		}
-		else
-		{
-			size_t match_len = strlen(match);
-
-			if (stutter)
-			{
-				if (!ensure_output_capacity(&output, &output_cap, output_len,
-				                            2))
-				{
-					free(output);
-					instance->errwu = "failed to resize output string";
-					return NULL;
-				}
-
-				output[output_len++] = match[0];
-				output[output_len++] = '-';
-				output[output_len] = '\0';
-			}
-
-			if (!ensure_output_capacity(&output, &output_cap, output_len,
-			                            match_len))
+			if (stutter && word_len > (size_t)-1 / 2)
 			{
 				free(output);
 				instance->errwu = "failed to resize output string";
 				return NULL;
+			}
+
+			if (!ensure_output_capacity(&output, &output_cap, output_len,
+			                            additional))
+			{
+				free(output);
+				instance->errwu = "failed to resize output string";
+				return NULL;
+			}
+
+			for (i = 0; i < word_len; i++)
+			{
+				char character = uwuify_char(word[i]);
+
+				output[output_len++] = character;
+
+				if (stutter)
+					output[output_len++] = '-';
+			}
+
+			output[output_len] = '\0';
+		}
+		else
+		{
+			size_t match_len = strlen(match);
+			size_t additional = match_len + (stutter ? 2 : 0);
+
+			if (stutter && match_len > (size_t)-1 - 2)
+			{
+				free(output);
+				instance->errwu = "failed to resize output string";
+				return NULL;
+			}
+
+			if (!ensure_output_capacity(&output, &output_cap, output_len,
+			                            additional))
+			{
+				free(output);
+				instance->errwu = "failed to resize output string";
+				return NULL;
+			}
+
+			if (stutter)
+			{
+				output[output_len++] = match[0];
+				output[output_len++] = '-';
 			}
 
 			memcpy(output + output_len, match, match_len);
