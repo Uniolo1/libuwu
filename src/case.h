@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: Unlicense
+
 #ifndef CASE_H
 #define CASE_H
 

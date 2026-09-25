@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	if (uwu_replacement_update(&instance, ":)", ":3"))
 	{
 		uwu_perrwu(&instance, "Failed to set custom replacement");
-		uwu_clear_errwu(&instance); // don't exit but clear errwu still, incase an error that does not set errwu occurs.
+		instance.errwu = NULL; // don't exit but clear errwu still, incase an error that does not set errwu occurs.
 	}
 
 	// uwuify some text!

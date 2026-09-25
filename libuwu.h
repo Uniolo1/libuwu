@@ -99,14 +99,6 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
 void uwu_perrwu(uwu_instance *instance, char *messsage);
 
 /**
- * @brief Clears errwu
- *
- * @param instance Pointer to a uwu_instance struct
- * @return Nothing is returned, function is guaranteed to succeed!
- */
-void uwu_clear_errwu(uwu_instance *instance);
-
-/**
  * @brief Removes item from replacement dictionary
  *
  * @param instance Pointer to a uwu_instance struct

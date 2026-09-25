@@ -43,6 +43,7 @@ static inline uint64_t rng_next(uint64_t *state)
 	return x * UINT64_C(2685821657736338717);
 }
 
+// stuttering logic is not made for multi-byte characters
 static inline bool is_first_character_multibyte(const char *input)
 {
 	unsigned char c;
@@ -51,7 +52,7 @@ static inline bool is_first_character_multibyte(const char *input)
 	return (c & 0x80) != 0;
 }
 
-static bool do_stutter(uwu_instance *instance, char *string)
+static inline bool do_stutter(uwu_instance *instance, char *string)
 {
 	if (is_first_character_multibyte(string))
 		return false;
@@ -118,11 +119,10 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 // WARNING: AI used heavily here (primarily in the string resizing logic)
 char *uwu_uwuify_text(uwu_instance *instance, char *input)
 {
+	// create output string
 	size_t output_len = 0;
 	size_t output_cap = strlen(input) + 1;
 	char *output = malloc(output_cap);
-
-	bool add_space = false;
 
 	if (output == NULL)
 	{
@@ -132,6 +132,7 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 
 	output[0] = '\0';
 
+	bool add_space = false;
 	char *word = strtok(input, " ");
 
 	while (word != NULL)
@@ -204,7 +205,7 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 			size_t additional;
 
 			/*
-			 * Reserve enough space for the replacement, even when
+			 * Reserve enough space for the replacement, if
 			 * it is larger than the original input word.
 			 */
 			if (stutter)

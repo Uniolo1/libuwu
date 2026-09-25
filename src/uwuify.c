@@ -3,6 +3,7 @@
 
 #include "uwuify.h"
 
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
@@ -10,9 +11,9 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v0.0.0";
-const uint16_t uwu_VERSION[3] = {0, 0, 0};
-#define DEFAULT_STUTTER_CHANCE 24 // 1 in 12
+const char *uwu_INFO = "libuwu v1.0.0";
+const uint16_t uwu_VERSION[3] = {1, 0, 0};
+#define DEFAULT_STUTTER_CHANCE 16 // 1 in 16
 
 static const uint8_t number_of_defaults; // used for determining default dictionary size
 
@@ -62,11 +63,6 @@ void uwu_perrwu(uwu_instance *instance, char *messsage)
 	printf("\n");
 }
 
-void uwu_clear_errwu(uwu_instance *instance)
-{
-	instance->errwu = NULL;
-}
-
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key)
 {
 	return uwu_dict_get(instance->internal.replacement_dictionary, key);
@@ -88,7 +84,7 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 	return 0;
 }
 
-static const uint8_t number_of_defaults = 11;
+static const uint8_t number_of_defaults = 12;
 static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
 	uint8_t ret = 0;
@@ -115,6 +111,8 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 		ret++;
 	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hii"))
 		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, ":)", ":3"))
+		ret++;
 
 	return ret;
 }
@@ -124,6 +122,8 @@ uint8_t uwu_replacement_load_defaults(uwu_instance *instance)
 {
 	uint8_t ret = private_replacement_load_defaults(instance);
 	if (ret != 0)
-		instance->errwu = "failed to allocate memory for a new item";
+		snprintf(instance->errwu, 46,
+		         "failed to allocate memory for %" PRIu8 " new item's", ret);
+
 	return ret;
 }
