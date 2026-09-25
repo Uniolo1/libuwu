@@ -1,4 +1,5 @@
 #include "case.h"
+#include "dictionary.h"
 
 #include <ctype.h>
 #include <stdbool.h>
@@ -42,19 +43,22 @@ static inline void make_uppercase(char **string)
 
 int uwu_strcasecmp(const char *a, const char *b)
 {
-	while (*a && *b)
+	int i = 0;
+	while ((a[i] != '\0') || (b[i] != '\0'))
 	{
-		unsigned char ca = (unsigned char)toupper((unsigned char)*a);
-		unsigned char cb = (unsigned char)toupper((unsigned char)*b);
+		char ca = (a[i] >= 'a' && a[i] <= 'z') ? a[i] - ('a' - 'A') : a[i];
+		char cb = (b[i] >= 'a' && b[i] <= 'z') ? b[i] - ('a' - 'A') : b[i];
 
 		if (ca != cb)
-			return ca - cb;
+			return 1;
 
-		a++;
-		b++;
+		i++;
 	}
 
-	return (unsigned char)*a - (unsigned char)*b;
+	if (!(a[i] != '\0' && b[i] != '\0'))
+		return -1;
+
+	return 0;
 }
 
 static inline bool check_case(char ch)
