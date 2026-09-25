@@ -1,5 +1,4 @@
 #include "case.h"
-#include "dictionary.h"
 
 #include <ctype.h>
 #include <stdbool.h>
