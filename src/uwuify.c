@@ -11,8 +11,8 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v1.0.0";
-const uint16_t uwu_VERSION[3] = {1, 0, 0};
+const char *uwu_INFO = "libuwu v1.0.1";
+const uint16_t uwu_VERSION[3] = {1, 0, 1};
 #define DEFAULT_STUTTER_CHANCE 16 // 1 in 16
 
 static const uint8_t number_of_defaults; // used for determining default dictionary size
@@ -109,7 +109,7 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 		ret++;
 	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hii"))
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hai"))
 		ret++;
 	if (uwu_dict_set(instance->internal.replacement_dictionary, ":)", ":3"))
 		ret++;
