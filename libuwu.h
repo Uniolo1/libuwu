@@ -23,6 +23,12 @@ typedef struct
 	size_t size;     // Current number of elements
 } Dictionary;
 
+typedef struct
+{
+	Dictionary *replacement_dictionary;
+	bool initalized;
+} uwu_instance_internal;
+
 /// @endcond
 
 /**
@@ -34,10 +40,9 @@ typedef struct
  */
 typedef struct
 {
+	uwu_instance_internal internal;
 	uint8_t stutter_chance;
-	Dictionary *replacement_dictionary;
 	uint64_t rng;
-	bool initalized;
 	char *errwu;
 } uwu_instance;
 
@@ -83,15 +88,6 @@ void uwu_close(uwu_instance *instance);
  * (see uwu_perrwu)
  */
 char *uwu_uwuify(uwu_instance *instance, char *input);
-
-/**
- * @brief Updates the chances for a stutter
- *
- * @param instance Pointer to a uwu_instance struct
- * @param new_chance chance (1 in new_chance) for a stutter to occur
- * @return Nothing is returned, function is guaranteed to succeed!
- */
-void uwu_update_stutter_chance(uwu_instance *instance, uint8_t new_chance);
 
 /**
  * @brief Prints errwu information, simalarly to perror. Outputs only messsage

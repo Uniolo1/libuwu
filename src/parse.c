@@ -71,28 +71,7 @@ static bool do_stutter(uwu_instance *instance, char *string)
 // extent possible)
 static inline char *match_and_replace_string(uwu_instance *instance, const char *input)
 {
-	// With this the output (if found) will always be lowercase:
-	/*
-	        char *ret = NULL;
-	        char *lower_input = uwu_strdup(input);
-
-	        if (lower_input != NULL)
-	        {
-	                uwu_make_lowercase(&lower_input);
-	                ret = uwu_dict_get(instance->replacement_dictionary, lower_input);
-	                free(lower_input);
-	        }
-	        else
-	        {
-	                // skip the lowercase step
-	                ret = uwu_dict_get(instance->replacement_dictionary, input);
-	        }
-
-	        uwu_transfer_case(input, &ret);
-	        return ret;
-	 */
-	// This perserves case but a match is only found if the input is all lowercase:
-	char *ret = uwu_dict_get(instance->replacement_dictionary, input);
+	char *ret = uwu_dict_get(instance->internal.replacement_dictionary, input);
 	uwu_transfer_case(input, &ret);
 	return ret;
 }

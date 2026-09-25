@@ -20,6 +20,7 @@ A demo program, stored in `cmd/`.
 ```c
 #include <libuwuify.h>
 #include <stdio.h>
+#include <time.h>
 
 int main(int argc, char *argv[])
 {
@@ -41,8 +42,8 @@ int main(int argc, char *argv[])
 		return 2; // usally a good idea (but not required) to exit here
 	}
 
-	// chance the stutter chance to be 1 in every 18 messages
-	uwu_update_stutter_chance(&instance, 18);
+	instance.stutter_chance = 24; // chance the stutter chance to be 1 in every 18 messages
+	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
 
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":)", ":3"))

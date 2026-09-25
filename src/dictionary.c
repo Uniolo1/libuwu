@@ -105,7 +105,6 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 		{
 			free(curr->value);
 			curr->value = uwu_strdup(value);
-			uwu_make_lowercase(&curr->key);
 			uwu_make_lowercase(&curr->value);
 			return 0;
 		}
@@ -118,9 +117,10 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 		return 1;
 
 	new_node->key = uwu_strdup(key);
-	uwu_make_lowercase(&new_node->key);
 	new_node->value = uwu_strdup(value);
+	uwu_make_lowercase(&new_node->key);
 	uwu_make_lowercase(&new_node->value);
+
 	new_node->next = dict->buckets[slot];
 	dict->buckets[slot] = new_node;
 	dict->size++;

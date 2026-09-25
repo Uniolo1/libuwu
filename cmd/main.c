@@ -3,6 +3,7 @@
 
 #include <libuwu.h>
 #include <stdio.h>
+#include <time.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +17,8 @@ int main(int argc, char *argv[])
 	// return value is ignored here
 	uwu_replacement_load_defaults(&instance);
 
-	uwu_update_stutter_chance(&instance, 24);
+	instance.stutter_chance = 24;
+	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
 
 	char *out;
 	switch (argc)
