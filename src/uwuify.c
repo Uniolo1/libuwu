@@ -111,6 +111,8 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 		return 1;
 	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
 		return 1;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hii"))
+		return 1;
 
 	return 0;
 }

@@ -43,7 +43,8 @@ static inline void make_uppercase(char **string)
 int uwu_strcasecmp(const char *a, const char *b)
 {
 	int i = 0;
-	while ((a[i] != '\0') || (b[i] != '\0'))
+
+	while (a[i] != '\0' && b[i] != '\0')
 	{
 		char ca = (a[i] >= 'a' && a[i] <= 'z') ? a[i] - ('a' - 'A') : a[i];
 		char cb = (b[i] >= 'a' && b[i] <= 'z') ? b[i] - ('a' - 'A') : b[i];
@@ -54,10 +55,10 @@ int uwu_strcasecmp(const char *a, const char *b)
 		i++;
 	}
 
-	if (!(a[i] != '\0' && b[i] != '\0'))
-		return -1;
+	if (a[i] == '\0' && b[i] == '\0')
+		return 0;
 
-	return 0;
+	return 1;
 }
 
 static inline bool check_case(char ch)

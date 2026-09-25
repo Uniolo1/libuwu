@@ -67,8 +67,6 @@ static bool do_stutter(uwu_instance *instance, char *string)
 	}
 }
 
-// TODO: Make matching somewhat case-insensitive (preserve case to the greatest
-// extent possible)
 static inline char *match_and_replace_string(uwu_instance *instance, const char *input)
 {
 	char *ret = uwu_dict_get(instance->internal.replacement_dictionary, input);
@@ -76,7 +74,6 @@ static inline char *match_and_replace_string(uwu_instance *instance, const char 
 	return ret;
 }
 
-// WARNING: AI used heavily here
 static inline bool ensure_output_capacity(char **output, size_t *capacity, size_t length,
                                           size_t additional)
 {
@@ -84,7 +81,7 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 	size_t new_capacity;
 	char *tmp;
 
-	if (additional > (size_t)-1 - length - 1)
+	if (additional > SIZE_MAX - length - 1)
 		return false;
 
 	required = length + additional + 1;
@@ -94,9 +91,12 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 
 	new_capacity = *capacity;
 
+	if (new_capacity == 0)
+		new_capacity = 1;
+
 	while (new_capacity < required)
 	{
-		if (new_capacity > (size_t)-1 / 2)
+		if (new_capacity > SIZE_MAX / 2)
 		{
 			new_capacity = required;
 			break;
@@ -159,14 +159,23 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 		if (match == NULL)
 		{
 			size_t word_len = strlen(word);
-			size_t additional = stutter ? word_len * 2 : word_len;
+			size_t additional;
 			size_t i;
 
-			if (stutter && word_len > (size_t)-1 / 2)
+			if (stutter)
 			{
-				free(output);
-				instance->errwu = "failed to resize output string";
-				return NULL;
+				if (word_len > (SIZE_MAX / 2))
+				{
+					free(output);
+					instance->errwu = "failed to resize output string";
+					return NULL;
+				}
+
+				additional = word_len * 2;
+			}
+			else
+			{
+				additional = word_len;
 			}
 
 			if (!ensure_output_capacity(&output, &output_cap, output_len,
@@ -192,13 +201,26 @@ char *uwu_uwuify_text(uwu_instance *instance, char *input)
 		else
 		{
 			size_t match_len = strlen(match);
-			size_t additional = match_len + (stutter ? 2 : 0);
+			size_t additional;
 
-			if (stutter && match_len > (size_t)-1 - 2)
+			/*
+			 * Reserve enough space for the replacement, even when
+			 * it is larger than the original input word.
+			 */
+			if (stutter)
 			{
-				free(output);
-				instance->errwu = "failed to resize output string";
-				return NULL;
+				if (match_len > SIZE_MAX - 2)
+				{
+					free(output);
+					instance->errwu = "failed to resize output string";
+					return NULL;
+				}
+
+				additional = match_len + 2;
+			}
+			else
+			{
+				additional = match_len;
 			}
 
 			if (!ensure_output_capacity(&output, &output_cap, output_len,
