@@ -35,15 +35,15 @@ static unsigned long djb2_hash(const char *str)
 }
 
 // Initialize the dictionary
-Dictionary *uwu_dict_create(size_t initial_capacity)
+uwu_internal_Dictionary *uwu_dict_create(size_t initial_capacity)
 {
-	Dictionary *dict = malloc(sizeof(Dictionary));
+	uwu_internal_Dictionary *dict = malloc(sizeof(uwu_internal_Dictionary));
 	if (!dict)
 		return NULL;
 
 	dict->capacity = initial_capacity > 0 ? initial_capacity : 16;
 	dict->size = 0;
-	dict->buckets = calloc(dict->capacity, sizeof(Node *));
+	dict->buckets = calloc(dict->capacity, sizeof(uwu_internal_Node *));
 
 	if (!dict->buckets)
 	{
@@ -53,12 +53,12 @@ Dictionary *uwu_dict_create(size_t initial_capacity)
 	return dict;
 }
 
-static int uwu_dict_resize(Dictionary *dict, size_t new_capacity)
+static int uwu_dict_resize(uwu_internal_Dictionary *dict, size_t new_capacity)
 {
-	Node **old_buckets = dict->buckets;
+	uwu_internal_Node **old_buckets = dict->buckets;
 	size_t old_capacity = dict->capacity;
 
-	dict->buckets = calloc(new_capacity, sizeof(Node *));
+	dict->buckets = calloc(new_capacity, sizeof(uwu_internal_Node *));
 	if (!dict->buckets)
 	{
 		dict->buckets = old_buckets; // Revert on failure
@@ -70,11 +70,11 @@ static int uwu_dict_resize(Dictionary *dict, size_t new_capacity)
 
 	for (size_t i = 0; i < old_capacity; i++)
 	{
-		Node *curr = old_buckets[i];
+		uwu_internal_Node *curr = old_buckets[i];
 		while (curr)
 		{
 			uwu_dict_set(dict, curr->key, curr->value);
-			Node *temp = curr;
+			uwu_internal_Node *temp = curr;
 			curr = curr->next;
 			free(temp->key);
 			free(temp->value);
@@ -86,7 +86,7 @@ static int uwu_dict_resize(Dictionary *dict, size_t new_capacity)
 }
 
 // Insert or update a key-value pair
-int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
+int uwu_dict_set(uwu_internal_Dictionary *dict, const char *key, const char *value)
 {
 	// Resize if load factor exceeds 0.75
 	if ((float)dict->size / dict->capacity > 0.75)
@@ -96,7 +96,7 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 	}
 
 	unsigned long slot = djb2_hash(key) % dict->capacity;
-	Node *curr = dict->buckets[slot];
+	uwu_internal_Node *curr = dict->buckets[slot];
 
 	// Check if key already exists, update value if so
 	while (curr)
@@ -112,7 +112,7 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 	}
 
 	// Otherwise, create a new node
-	Node *new_node = malloc(sizeof(Node));
+	uwu_internal_Node *new_node = malloc(sizeof(uwu_internal_Node));
 	if (!new_node)
 		return 1;
 
@@ -128,10 +128,10 @@ int uwu_dict_set(Dictionary *dict, const char *key, const char *value)
 }
 
 // Retrieve a value by key (returns NULL if not found)
-char *uwu_dict_get(Dictionary *dict, const char *key)
+char *uwu_dict_get(uwu_internal_Dictionary *dict, const char *key)
 {
 	unsigned long slot = djb2_hash(key) % dict->capacity;
-	Node *curr = dict->buckets[slot];
+	uwu_internal_Node *curr = dict->buckets[slot];
 
 	while (curr)
 	{
@@ -146,16 +146,16 @@ char *uwu_dict_get(Dictionary *dict, const char *key)
 }
 
 // Free all memory associated with the dictionary
-void uwu_dict_free(Dictionary *dict)
+void uwu_dict_free(uwu_internal_Dictionary *dict)
 {
 	if (!dict)
 		return;
 	for (size_t i = 0; i < dict->capacity; i++)
 	{
-		Node *curr = dict->buckets[i];
+		uwu_internal_Node *curr = dict->buckets[i];
 		while (curr)
 		{
-			Node *temp = curr;
+			uwu_internal_Node *temp = curr;
 			curr = curr->next;
 			free(temp->key);
 			free(temp->value);

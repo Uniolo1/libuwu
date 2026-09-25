@@ -9,23 +9,23 @@
 
 /// @cond INTERNAL
 
-typedef struct Node
+typedef struct uwu_internal_Node
 {
 	char *key;
 	char *value;
-	struct Node *next;
-} Node;
+	struct uwu_internal_Node *next;
+} uwu_internal_Node;
 
-typedef struct
+typedef struct uwu_internal_Dictionary
 {
-	Node **buckets;  // Array of linked list pointers
-	size_t capacity; // Total number of buckets
-	size_t size;     // Current number of elements
-} Dictionary;
+	uwu_internal_Node **buckets; // Array of linked list pointers
+	size_t capacity;             // Total number of buckets
+	size_t size;                 // Current number of elements
+} uwu_internal_Dictionary;
 
-typedef struct
+typedef struct uwu_internal_instance_internal
 {
-	Dictionary *replacement_dictionary;
+	uwu_internal_Dictionary *replacement_dictionary;
 	bool initalized;
 } uwu_instance_internal;
 
@@ -59,7 +59,7 @@ extern const char *uwu_INFO;
  * [2] = patch
  *
  * As long as the breaking release is the same, code and binaries made for an
- * older release will be compatible with neweer releases.
+ * older release will be compatible with newer releases.
  */
 extern const uint16_t uwu_VERSION[3];
 
@@ -129,7 +129,7 @@ uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const ch
  * @brief Loads defaults
  *
  * @param instance Pointer to a uwu_instance struct
- * @return 0 on success, 1 in failure with errwu being set
+ * @return 0 on success, the amount of defaults it failed to set on failure
  */
 uint8_t uwu_replacement_load_defaults(uwu_instance *instance);
 

@@ -88,33 +88,35 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 	return 0;
 }
 
-static const uint8_t number_of_defaults = 10;
+static const uint8_t number_of_defaults = 11;
 static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "love", "wuv"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "loved", "wuved"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "this", "dis"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "small", "smol"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "windows", "wuduws"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "angry", "angi"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "guh", "buh"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "boy", "boi"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "error", "errwu"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
-		return 1;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hii"))
-		return 1;
+	uint8_t ret = 0;
 
-	return 0;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "love", "wuv"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "loved", "wuved"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "this", "dis"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "small", "smol"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "windows", "wuduws"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "angry", "angi"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "guh", "buh"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "boy", "boi"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "error", "errwu"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
+		ret++;
+	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hii"))
+		ret++;
+
+	return ret;
 }
 
 // wrapper around private_replacement_load_defaults that sets errwu
