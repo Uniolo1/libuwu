@@ -122,8 +122,7 @@ uint8_t uwu_replacement_load_defaults(uwu_instance *instance)
 {
 	uint8_t ret = private_replacement_load_defaults(instance);
 	if (ret != 0)
-		snprintf(instance->errwu, 46,
-		         "failed to allocate memory for %" PRIu8 " new item's", ret);
+		instance->errwu = "failed to allocate memory for one ore more new item's";
 
 	return ret;
 }
