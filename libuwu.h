@@ -64,6 +64,11 @@ extern const char *uwu_INFO;
 extern const uint16_t uwu_VERSION[3];
 
 /**
+ * @brief Number of default replacements
+ */
+extern const uint8_t uwu_number_of_default_replacements;
+
+/**
  * @brief Initalizes a uwu_instance.
  *
  * @param instance Pointer to a uwu_instance struct

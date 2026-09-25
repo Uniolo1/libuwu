@@ -13,9 +13,8 @@
 
 const char *uwu_INFO = "libuwu v1.0.1";
 const uint16_t uwu_VERSION[3] = {1, 0, 1};
+// 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 16 // 1 in 16
-
-static const uint8_t number_of_defaults; // used for determining default dictionary size
 
 uint8_t uwu_init(uwu_instance *instance)
 {
@@ -23,7 +22,8 @@ uint8_t uwu_init(uwu_instance *instance)
 		// close and then reinitalize
 		uwu_close(instance);
 
-	instance->internal.replacement_dictionary = uwu_dict_create(number_of_defaults + 1);
+	instance->internal.replacement_dictionary =
+	    uwu_dict_create(uwu_number_of_default_replacements + 1);
 
 	if (instance->internal.replacement_dictionary == NULL)
 	{
@@ -84,45 +84,8 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 	return 0;
 }
 
-static const uint8_t number_of_defaults = 12;
-static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
-{
-	uint8_t ret = 0;
-
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "love", "wuv"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "loved", "wuved"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "this", "dis"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "small", "smol"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "windows", "wuduws"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "angry", "angi"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "guh", "buh"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "boy", "boi"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "error", "errwu"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hai"))
-		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, ":)", ":3"))
-		ret++;
-
-	return ret;
-}
-
-// wrapper around private_replacement_load_defaults that sets errwu
-uint8_t uwu_replacement_load_defaults(uwu_instance *instance)
-{
-	uint8_t ret = private_replacement_load_defaults(instance);
-	if (ret != 0)
-		instance->errwu = "failed to allocate memory for one ore more new item's";
-
-	return ret;
-}
+/*
+ * implementation of:
+ * 	uint8_t uwu_replacement_load_defaults(uwu_instance *instance);
+ * has been moved to defaults.c
+ */
