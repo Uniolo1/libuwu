@@ -57,6 +57,18 @@ static inline char *get_argument(char *restrict arg, const char *restrict name)
 	return NULL;
 }
 
+static void print_help(const char *program_name)
+{
+	printf("%s\n", uwu_INFO);
+
+	printf("Usage: %s <input> [options]\n", program_name);
+	printf("\n");
+	printf("Options:\n");
+	printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
+	       DEFAULT_STUTTER_CHANCE);
+	printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
+}
+
 static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
 {
 	for (int i = 2; argv[i] != NULL; i++)
@@ -94,6 +106,12 @@ static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
 			continue;
 		}
 
+		if ((strcmp(argv[i], "--help") == 0))
+		{
+			print_help(argv[0]);
+			exit(1);
+		}
+
 		printf("Unknown argument: %s\n", argv[i]);
 		exit(1);
 	}
@@ -117,17 +135,9 @@ int main(int argc, char *argv[])
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
 	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
 
-	if (argc <= 1)
+	if (argc <= 1 || (strcmp(argv[1], "--help") == 0))
 	{
-		printf("%s\n", uwu_INFO);
-
-		printf("Usage: %s <input> [options]\n", argv[0]);
-		printf("\n");
-		printf("Options:\n");
-		printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
-		       DEFAULT_STUTTER_CHANCE);
-		printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
-
+		print_help(argv[0]);
 		return 1;
 	}
 
@@ -137,7 +147,7 @@ int main(int argc, char *argv[])
 	}
 
 	char *out;
-	if (argv[1][0] == '-' || argv[1][1] == '\0')
+	if (strcmp(argv[1], "-") == 0)
 	{
 		char *input = write_entire_stdin_to_string();
 		out = uwu_uwuify(&instance, input);
