@@ -127,10 +127,37 @@ int uwu_dict_set(uwu_internal_Dictionary *dict, const char *key, const char *val
 	return 0;
 }
 
-// TODO: make this actually remove the item instead of NULL'ing it
 int uwu_dict_remove(uwu_internal_Dictionary *dict, const char *key)
 {
-	return uwu_dict_set(dict, key, NULL);
+	unsigned long slot = djb2_hash(key) % dict->capacity;
+	uwu_internal_Node *curr = dict->buckets[slot];
+	uwu_internal_Node *prev = NULL;
+
+	while (curr)
+	{
+		if (uwu_is_same_string_nocase(curr->key, key))
+		{
+			// Remove from linked list
+			if (prev)
+				prev->next = curr->next;
+			else
+				dict->buckets[slot] = curr->next;
+
+			// Free the node's resources
+			free(curr->key);
+			free(curr->value);
+			free(curr);
+
+			dict->size--;
+			return 0;
+		}
+
+		prev = curr;
+		curr = curr->next;
+	}
+
+	// Key wasn't found
+	return 1;
 }
 
 // Retrieve a value by key (returns NULL if not found)
