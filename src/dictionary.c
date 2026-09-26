@@ -135,7 +135,7 @@ char *uwu_dict_get(uwu_internal_Dictionary *dict, const char *key)
 
 	while (curr)
 	{
-		if (uwu_strcasecmp(curr->key, key) == 0)
+		if (uwu_is_same_string_nocase(curr->key, key))
 		{
 			uwu_make_lowercase(&curr->value);
 			return curr->value;

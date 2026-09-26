@@ -13,6 +13,7 @@ typedef enum uwu_Case
 	UWU_CASE_FIRST_CAPS, // the first but not second character is
 	                     // capitalzied
 	UWU_CASE_ALL_CAPS,   // all characters are capitalized
+	UWU_CASE_DO_NOTHING, // string is null or empty
 } uwu_Case;
 
 void uwu_make_lowercase(char **string)
@@ -43,13 +44,14 @@ static inline void make_uppercase(char **string)
 		make_upperchar(p);
 }
 
-int uwu_strcasecmp(const char *a, const char *b)
+bool uwu_is_same_string_nocase(const char *a, const char *b)
 {
-	int i = 0;
+	size_t i = 0;
 
 	while (a[i] != '\0' && b[i] != '\0')
 	{
 		char ca = (a[i] >= 'a' && a[i] <= 'z') ? a[i] - ('a' - 'A') : a[i];
+
 		char cb = (b[i] >= 'a' && b[i] <= 'z') ? b[i] - ('a' - 'A') : b[i];
 
 		if (ca != cb)
@@ -58,44 +60,34 @@ int uwu_strcasecmp(const char *a, const char *b)
 		i++;
 	}
 
-	if (a[i] == '\0' && b[i] == '\0')
-		return 0;
-
-	return 1;
+	return a[i] == b[i];
 }
 
 static inline bool check_case(char ch)
 {
-	if (ch >= 'A' && ch <= 'Z')
-		return true;
-	else
-		// lowercase OR outside ASCI
-		return true;
+	return ch >= 'A' && ch <= 'Z';
 }
 
 static inline uwu_Case determine_case(const char *input)
 {
-	bool exited_early = false;
 	bool first_caps = false;
-	bool first = true;
+	bool all_caps = true;
 
-	for (int i = 0; input[i] != '\0'; i++)
+	if (input == NULL || input[0] == '\0')
+		return UWU_CASE_DO_NOTHING;
+
+	first_caps = check_case(input[0]);
+
+	for (size_t i = 0; input[i] != '\0'; ++i)
 	{
-		bool caps = check_case(input[i]);
-		if (caps)
+		if (!check_case(input[i]))
 		{
-			exited_early = true;
+			all_caps = false;
 			break;
-		}
-
-		if (first)
-		{
-			first = false;
-			first_caps = true;
 		}
 	}
 
-	if (!exited_early)
+	if (all_caps)
 		return UWU_CASE_ALL_CAPS;
 
 	if (first_caps)
@@ -136,6 +128,8 @@ void uwu_transfer_case(const char *refrence, char **string)
 		break;
 	case UWU_CASE_ALL_CAPS:
 		make_uppercase(string);
+		break;
+	case UWU_CASE_DO_NOTHING:
 		break;
 	}
 }
