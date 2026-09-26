@@ -119,8 +119,9 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 	return true;
 }
 
+// NOTE: function prototype in "uwuify.h"
 // WARNING: AI used heavily here (primarily in the string resizing logic)
-char *uwu_uwuify_text(uwu_instance *instance, char *input)
+char *uwu_uwuify(uwu_instance *instance, char *input)
 {
 	// create output string
 	size_t output_len = 0;

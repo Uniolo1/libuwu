@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
+// NOTE: libuwu uses LIBUWU_H for include guards
 #include "../libuwu.h"
 
 // internal use only stucts
@@ -22,7 +23,7 @@ typedef struct uwu_internal_Dictionary
 	size_t size;                 // Current number of elements
 } uwu_internal_Dictionary;
 
-struct uwu_internal_instance_internal
+struct uwu_instance_internal
 {
 	uwu_internal_Dictionary *replacement_dictionary;
 	uint64_t (*rng_function)(uint64_t *);

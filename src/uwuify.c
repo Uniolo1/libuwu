@@ -11,8 +11,8 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v2.1.1 <https://github.com/uniolo1/libuwu>";
-const uint16_t uwu_VERSION[3] = {2, 1, 1};
+const char *uwu_INFO = "libuwu v2.1.2 <https://github.com/uniolo1/libuwu>";
+const uint16_t uwu_VERSION[3] = {2, 1, 2};
 // 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 
@@ -50,11 +50,11 @@ void uwu_close(uwu_instance *instance)
 	instance->internal = NULL;
 }
 
-char *uwu_uwuify(uwu_instance *instance, char *input)
-{
-	// NOTE: errwu set by uwu_uwuify_text
-	return uwu_uwuify_text(instance, input);
-}
+/*
+ * implementation of:
+ * 	char *uwu_uwuify(uwu_instance *instance, char *input);
+ * has been moved to parse.c
+ */
 
 void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage)
 {

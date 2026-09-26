@@ -9,7 +9,7 @@
 
 /// @cond INTERNAL
 
-typedef struct uwu_internal_instance_internal uwu_instance_internal;
+typedef struct uwu_instance_internal uwu_instance_internal;
 
 /// @endcond
 
@@ -95,6 +95,7 @@ void uwu_perrwu(uwu_instance *instance, char *messsage);
  * @brief Prints errwu information, simalarly to uwu_perrwu, but outputs to stream parameter
  * instead of stderr.
  *
+ * @param stream File stream it outputs too
  * @param instance Pointer to a uwu_instance struct
  * @param message Message printed before error (simalarly to perror)
  * @return Nothing is returned, function is guaranteed to succeed!
