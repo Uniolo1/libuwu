@@ -32,6 +32,11 @@ typedef struct uwu_internal_instance_internal
 /// @endcond
 
 /**
+ * @brief The breaking version the program is built against
+ */
+#define UWU_BREAKING_RELEASE_BUILT_AGAINST 1
+
+/**
  * @brief Struct containing information, passed along to various functions, with
  * the exception of 'stutter_chance', do not modify manually.
  *
