@@ -24,6 +24,7 @@ typedef struct uwu_internal_Dictionary
 struct uwu_internal_instance_internal
 {
 	uwu_internal_Dictionary *replacement_dictionary;
+	uint64_t (*rng_function)(uint64_t *);
 	bool initalized;
 };
 #endif

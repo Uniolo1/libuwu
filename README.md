@@ -43,7 +43,11 @@ int main(int argc, char *argv[])
 	}
 
 	instance.stutter_chance = 24; // chance the stutter chance to be 1 in every 18 messages
+
 	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
+	// you can also change the function used to generate a random number like so:
+	//     uint64_t rng_next(uint64_t *seed) {(void)seed; return 0;} // example function
+	//     uwu_rng_change(&instance, rng_next);
 
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":)", ":3"))

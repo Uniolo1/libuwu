@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#ifndef LIBUWUIFY_H
-#define LIBUWUIFY_H
+#ifndef LIBUWU_H
+#define LIBUWU_H
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -88,6 +88,14 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
  * @return Nothing is returned, function is guaranteed to succeed!
  */
 void uwu_perrwu(uwu_instance *instance, char *messsage);
+
+/**
+ * @brief Sets the function used to generate a random number
+ *
+ * @param function Pointer to a uwu_instance struct, must match 'uint64_t name(uint64_t
+ * *seed)'.
+ */
+void uwu_rng_change(uwu_instance *instance, uint64_t (*func)(uint64_t *));
 
 /**
  * @brief Removes item from replacement dictionary

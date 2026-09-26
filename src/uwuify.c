@@ -11,8 +11,8 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v2.0.0 <https://github.com/uniolo1/libuwu>";
-const uint16_t uwu_VERSION[3] = {2, 0, 0};
+const char *uwu_INFO = "libuwu v2.1.0 <https://github.com/uniolo1/libuwu>";
+const uint16_t uwu_VERSION[3] = {2, 1, 0};
 // 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 
@@ -24,6 +24,7 @@ uint8_t uwu_init(uwu_instance *instance)
 		// close and then reinitalize
 		uwu_close(instance);
 
+	instance->internal->rng_function = uwu_rng_next;
 	instance->internal->replacement_dictionary =
 	    uwu_dict_create(uwu_number_of_default_replacements + 1);
 
@@ -63,6 +64,11 @@ void uwu_perrwu(uwu_instance *instance, char *messsage)
 	if (instance->errwu != NULL)
 		printf(" %s", instance->errwu);
 	printf("\n");
+}
+
+void uwu_rng_change(uwu_instance *instance, uint64_t (*func)(uint64_t *))
+{
+	instance->internal->rng_function = func;
 }
 
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key)

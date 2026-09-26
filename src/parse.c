@@ -30,7 +30,7 @@ static char uwuify_char(char input)
 }
 
 // xorshift64* Marsaglia/Vigna-style variant
-static inline uint64_t rng_next(uint64_t *state)
+uint64_t uwu_rng_next(uint64_t *state)
 {
 	uint64_t x = *state;
 
@@ -64,7 +64,8 @@ static inline bool do_stutter(uwu_instance *instance, char *string)
 	case 1:
 		return true;
 	default:
-		return ((rng_next(&instance->rng) % instance->stutter_chance) == 0);
+		return ((instance->internal->rng_function(&instance->rng) %
+		         instance->stutter_chance) == 0);
 	}
 }
 
