@@ -70,6 +70,8 @@ void uwu_perrwu(uwu_instance *instance, char *messsage)
 	uwu_fperrwu(stderr, instance, messsage);
 }
 
+// NOTICE: next breaking release should change this to be outside the 'internal' struct,
+// and make this so that it is set outside of this function by the calling code.
 void uwu_rng_change(uwu_instance *instance, uint64_t (*func)(uint64_t *))
 {
 	instance->internal->rng_function = func;
@@ -92,7 +94,7 @@ uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const ch
 
 uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 {
-	uwu_dict_set(instance->internal->replacement_dictionary, key, NULL);
+	uwu_dict_remove(instance->internal->replacement_dictionary, key);
 	return 0;
 }
 

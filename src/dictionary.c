@@ -127,6 +127,12 @@ int uwu_dict_set(uwu_internal_Dictionary *dict, const char *key, const char *val
 	return 0;
 }
 
+// TODO: make this actually remove the item instead of NULL'ing it
+int uwu_dict_remove(uwu_internal_Dictionary *dict, const char *key)
+{
+	return uwu_dict_set(dict, key, NULL);
+}
+
 // Retrieve a value by key (returns NULL if not found)
 char *uwu_dict_get(uwu_internal_Dictionary *dict, const char *key)
 {
