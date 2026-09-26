@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	//     uwu_rng_change(&instance, rng_next);
 
 	// set customn replacement
-	if (uwu_replacement_update(&instance, ":)", ":3"))
+	if (uwu_replacement_update(&instance, ":(", ":)"))
 	{
 		uwu_perrwu(&instance, "Failed to set custom replacement");
 		instance.errwu = NULL; // don't exit but clear errwu still, incase an error that does not set errwu occurs.
