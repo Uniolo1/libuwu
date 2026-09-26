@@ -29,6 +29,8 @@ static char uwuify_char(char input)
 	}
 }
 
+// default instance->internal->rng_function
+// DO NOT CALL DIRECTLY, call instance->internal->rng_function instead!
 // xorshift64* Marsaglia/Vigna-style variant
 uint64_t uwu_rng_next(uint64_t *state)
 {
