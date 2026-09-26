@@ -5,7 +5,7 @@ SPDX-License-Identifier: Unlicense
 
 # libuwu
 
-A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ANSI C99. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
+A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ISO C99. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
 
 ## building
 

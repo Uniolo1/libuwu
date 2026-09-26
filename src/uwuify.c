@@ -14,7 +14,7 @@
 const char *uwu_INFO = "libuwu v1.0.2";
 const uint16_t uwu_VERSION[3] = {1, 0, 2};
 // 'uwu_number_of_default_replacements' defined in defaults.c
-#define DEFAULT_STUTTER_CHANCE 16 // 1 in 16
+#define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 
 uint8_t uwu_init(uwu_instance *instance)
 {
