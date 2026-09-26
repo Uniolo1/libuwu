@@ -26,7 +26,7 @@ typedef struct uwu_internal_instance_internal uwu_instance_internal;
  */
 typedef struct
 {
-	uwu_instance_internal *internal;
+	uwu_instance_internal *internal; // internal use only
 	uint8_t stutter_chance;
 	uint64_t rng;
 	char *errwu;

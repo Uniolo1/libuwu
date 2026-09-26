@@ -3,6 +3,7 @@
 
 #include "../libuwu.h"
 
+// internal use only stucts
 #ifndef UWUIFY_H
 #define UWUIFY_H
 #include <stdlib.h>
