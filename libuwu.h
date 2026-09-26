@@ -5,6 +5,7 @@
 #define LIBUWU_H
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /// @cond INTERNAL
 
@@ -85,9 +86,20 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
  * if errwu is unset.
  *
  * @param instance Pointer to a uwu_instance struct
+ * @param message Message printed before error (simalarly to perror)
  * @return Nothing is returned, function is guaranteed to succeed!
  */
 void uwu_perrwu(uwu_instance *instance, char *messsage);
+
+/**
+ * @brief Prints errwu information, simalarly to uwu_perrwu, but outputs to stream parameter
+ * instead of stdout.
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param message Message printed before error (simalarly to perror)
+ * @return Nothing is returned, function is guaranteed to succeed!
+ */
+void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage);
 
 /**
  * @brief Sets the function used to generate a random number

@@ -11,8 +11,8 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v2.1.0 <https://github.com/uniolo1/libuwu>";
-const uint16_t uwu_VERSION[3] = {2, 1, 0};
+const char *uwu_INFO = "libuwu v2.1.1 <https://github.com/uniolo1/libuwu>";
+const uint16_t uwu_VERSION[3] = {2, 1, 1};
 // 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 
@@ -35,7 +35,6 @@ uint8_t uwu_init(uwu_instance *instance)
 	}
 
 	instance->stutter_chance = DEFAULT_STUTTER_CHANCE;
-	instance->rng = 0;
 	instance->errwu = NULL;
 
 	instance->internal->initalized = true;
@@ -57,13 +56,18 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 	return uwu_uwuify_text(instance, input);
 }
 
-void uwu_perrwu(uwu_instance *instance, char *messsage)
+void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage)
 {
 	// basically just perror but libuwu, ensures errwu is not NULL.
-	printf("%s:", messsage);
+	fprintf(stream, "%s:", messsage);
 	if (instance->errwu != NULL)
-		printf(" %s", instance->errwu);
-	printf("\n");
+		fprintf(stream, " %s", instance->errwu);
+	fprintf(stream, "\n");
+}
+
+void uwu_perrwu(uwu_instance *instance, char *messsage)
+{
+	uwu_fperrwu(stdout, instance, messsage);
 }
 
 void uwu_rng_change(uwu_instance *instance, uint64_t (*func)(uint64_t *))

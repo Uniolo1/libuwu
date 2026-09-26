@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 	uwu_instance instance;
 	if (uwu_init(&instance))
 	{
+		// uwu_perrwu works on instances that failed to initalize
 		uwu_perrwu(&instance, "Failed to initalize libuwu");
 		return 1;
 	}
@@ -38,8 +39,10 @@ int main(int argc, char *argv[])
 	// load default replacements
 	if (uwu_replacement_load_defaults(&instance))
 	{
-		uwu_perrwu(&instance, "Failed to load default replacement's");
-		return 2; // usally a good idea (but not required) to exit here
+		// print to stderr here since we don't exit
+		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
+		instance.errwu = NULL; // clear errwu incase another error occurs
+		// usally a good idea (but not required) to exit here
 	}
 
 	instance.stutter_chance = 8; // chance the stutter chance to be 1 in every 8 messages
@@ -52,12 +55,13 @@ int main(int argc, char *argv[])
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":(", ":)"))
 	{
-		uwu_perrwu(&instance, "Failed to set custom replacement");
-		instance.errwu = NULL; // don't exit but clear errwu still, incase an error that does not set errwu occurs.
+		// print to stderr here since we don't exit
+		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
+		return 2;
 	}
 
 	// uwuify some text!
-	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :)");
+	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :(");
 	if (output == NULL)
 	{
 		uwu_perrwu(&instance, "Failed to uwuify text")
