@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#include <libuwu.h>
+// demo programs use relative paths so clangd can shutup
+#include "../libuwu.h"
 
 #include <errno.h>
 #include <stdint.h>
