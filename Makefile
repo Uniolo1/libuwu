@@ -34,7 +34,7 @@ $(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 demo: $(OUT)/$(LIB_NAME).a
-	$(CC) $(CFLAGS) --std=c99 cmd/main.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
+	$(CC) $(CFLAGS) --std=c99 cmd/uwuify.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
 analyze:
