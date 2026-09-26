@@ -46,21 +46,22 @@ static inline void make_uppercase(char **string)
 
 bool uwu_is_same_string_nocase(const char *a, const char *b)
 {
-	size_t i = 0;
-
-	while (a[i] != '\0' && b[i] != '\0')
+	while (*a && *b)
 	{
-		char ca = (a[i] >= 'a' && a[i] <= 'z') ? a[i] - ('a' - 'A') : a[i];
+		char ca = *a++;
+		char cb = *b++;
 
-		char cb = (b[i] >= 'a' && b[i] <= 'z') ? b[i] - ('a' - 'A') : b[i];
+		if (ca >= 'a' && ca <= 'z')
+			ca -= 'a' - 'A';
+
+		if (cb >= 'a' && cb <= 'z')
+			cb -= 'a' - 'A';
 
 		if (ca != cb)
-			return 1;
-
-		i++;
+			return false;
 	}
 
-	return a[i] == b[i];
+	return *a == *b;
 }
 
 static inline bool check_case(char ch)
