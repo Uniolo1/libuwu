@@ -9,7 +9,7 @@ A version of [owoify-py](https://pypi.org/project/owoify-py/) written in ISO C99
 
 ## building
 
-Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make demo` to compile the demo! This library should also work on Windows but you will have to compile it manually.
+Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make demo` to compile the demo! This library should also work on Windows but you will have to compile it manually (shouldn't be too hard).
 
 ## uwuify
 
