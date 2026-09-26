@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Unlicense
 
 CC      := gcc
-CFLAGS  := -Wall -Wextra -pedantic -O2 -g -fno-omit-frame-pointer -D_ISOC99_SOURCE
+CFLAGS  := -Wall -Wextra -pedantic -g -fno-omit-frame-pointer -D_ISOC99_SOURCE
 AR      := ar
 ARFLAGS := rcs
 
@@ -27,14 +27,14 @@ shared: $(OUT)/$(LIB_NAME).so.2
 	@echo "Built: $(abspath $<)"
 
 $(OUT)/$(LIB_NAME).so.2: $(LIB_SRCS)
-	$(CC) $(CFLAGS) -fPIC -shared -Wl,-soname,$@ -o $@ $^
+	$(CC) -O2 $(CFLAGS) -fPIC -shared -Wl,-soname,$@ -o $@ $^
 
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -O2 $(CFLAGS) -c $< -o $@
 
 demo: $(OUT)/$(LIB_NAME).a
-	$(CC) $(CFLAGS) --std=c99 cmd/uwuify.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
+	$(CC) -O2 $(CFLAGS) --std=c99 cmd/uwuify.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
 test: $(OUT)/$(LIB_NAME).a

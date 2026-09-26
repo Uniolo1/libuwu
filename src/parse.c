@@ -165,23 +165,18 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 		if (match == NULL)
 		{
 			size_t word_len = strlen(word);
-			size_t additional;
-			size_t i;
+			size_t additional = word_len;
 
 			if (stutter)
 			{
-				if (word_len > (SIZE_MAX / 2))
+				if (word_len > SIZE_MAX - 2)
 				{
 					free(output);
 					instance->errwu = "failed to resize output string";
 					return NULL;
 				}
 
-				additional = word_len * 2;
-			}
-			else
-			{
-				additional = word_len;
+				additional = word_len + 2;
 			}
 
 			if (!ensure_output_capacity(&output, &output_cap, output_len,
@@ -192,14 +187,17 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 				return NULL;
 			}
 
-			for (i = 0; i < word_len; i++)
+			if (stutter)
 			{
-				char character = uwuify_char(word[i]);
+				char character = uwuify_char(word[0]);
 
 				output[output_len++] = character;
+				output[output_len++] = '-';
+			}
 
-				if (stutter)
-					output[output_len++] = '-';
+			for (size_t i = 0; i < word_len; i++)
+			{
+				output[output_len++] = uwuify_char(word[i]);
 			}
 
 			output[output_len] = '\0';

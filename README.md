@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
 
 	// output the uwuified text
 	printf("%s\n", output);
+	free(output); // output is malloc'd, remeber to free it!
 
 	// if your program exits here, you can probably skip this step, but otherwies make sure to close your instance!
 	uwu_close(&instance);

@@ -42,7 +42,7 @@ int testc_add_test(testc_tests *instance, int (*function)(void),
                    const char *restrict name); // BEWARE: if 'name' goes out scope, undefined
                                                // behavior will ensue!
 
-size_t run_tests(testc_tests *instance);
+long run_tests(testc_tests *instance);
 
 #ifdef TESTC_H_IMPLEMENTATION
 
@@ -133,16 +133,16 @@ int testc_add_test(testc_tests *instance, int (*function)(void), const char *nam
 	return 0;
 }
 
-size_t run_tests(testc_tests *instance)
+long run_tests(testc_tests *instance)
 {
 	if (instance->count == 0)
 	{
 		puts("No tests to run!");
-		return 0;
+		return -1;
 	}
 
 	printf("Running %zu tests\n", instance->count);
-	size_t failed = 0;
+	long failed = 0;
 
 	for (size_t i = 0; i < instance->count; i++)
 	{

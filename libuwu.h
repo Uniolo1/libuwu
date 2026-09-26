@@ -76,7 +76,7 @@ void uwu_close(uwu_instance *instance);
  * @brief Uwuifies text
  *
  * @param instance Pointer to a uwu_instance struct
- * @return An uwuified string on success and NULL on error with errwu being set
+ * @return An uwuified malloc' string on success and NULL on error with errwu being set
  * (see uwu_perrwu)
  */
 char *uwu_uwuify(uwu_instance *instance, char *input);
