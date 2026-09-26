@@ -66,7 +66,7 @@ bool uwu_is_same_string_nocase(const char *a, const char *b)
 	return *a == *b;
 }
 
-static inline bool check_case(char ch)
+static inline bool is_uppercase(char ch)
 {
 	return ch >= 'A' && ch <= 'Z';
 }
@@ -79,11 +79,11 @@ static inline uwu_Case determine_case(const char *input)
 	if (input == NULL || input[0] == '\0')
 		return UWU_CASE_DO_NOTHING;
 
-	first_caps = check_case(input[0]);
+	first_caps = is_uppercase(input[0]);
 
 	for (size_t i = 0; input[i] != '\0'; ++i)
 	{
-		if (!check_case(input[i]))
+		if (!is_uppercase(input[i]))
 		{
 			all_caps = false;
 			break;
