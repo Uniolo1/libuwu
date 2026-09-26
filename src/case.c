@@ -44,6 +44,8 @@ static inline void make_uppercase(char **string)
 		make_upperchar(p);
 }
 
+// AI used here for optimization and code review and whatnot
+// (because I was originally convinced this was mutating another string somehow)
 bool uwu_is_same_string_nocase(const char *a, const char *b)
 {
 	while (*a && *b)
