@@ -70,7 +70,7 @@ static inline bool do_stutter(uwu_instance *instance, char *string)
 
 static inline char *match_and_replace_string(uwu_instance *instance, const char *input)
 {
-	char *ret = uwu_dict_get(instance->internal.replacement_dictionary, input);
+	char *ret = uwu_dict_get(instance->internal->replacement_dictionary, input);
 	uwu_transfer_case(input, &ret);
 	return ret;
 }

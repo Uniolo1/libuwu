@@ -11,21 +11,23 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v1.0.2 <https://github.com/uniolo1/libuwu>";
-const uint16_t uwu_VERSION[3] = {1, 0, 2};
+const char *uwu_INFO = "libuwu v2.0.0 <https://github.com/uniolo1/libuwu>";
+const uint16_t uwu_VERSION[3] = {2, 0, 0};
 // 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 
 uint8_t uwu_init(uwu_instance *instance)
 {
-	if (instance->internal.initalized)
+	if (instance->internal == NULL)
+		instance->internal = malloc(sizeof(*instance->internal));
+	else if (instance->internal->initalized)
 		// close and then reinitalize
 		uwu_close(instance);
 
-	instance->internal.replacement_dictionary =
+	instance->internal->replacement_dictionary =
 	    uwu_dict_create(uwu_number_of_default_replacements + 1);
 
-	if (instance->internal.replacement_dictionary == NULL)
+	if (instance->internal->replacement_dictionary == NULL)
 	{
 		instance->errwu = "failed to allocate memory for dictionary";
 		return 1;
@@ -35,17 +37,17 @@ uint8_t uwu_init(uwu_instance *instance)
 	instance->rng = 0;
 	instance->errwu = NULL;
 
-	instance->internal.initalized = true;
+	instance->internal->initalized = true;
 	return 0;
 }
 
 // WARNING: any instance that is closed must be re-initalized!
 void uwu_close(uwu_instance *instance)
 {
-	uwu_dict_free(instance->internal.replacement_dictionary);
-	instance->internal.replacement_dictionary = NULL;
-
-	instance->internal.initalized = false;
+	if (instance->internal == NULL)
+		return;
+	free(instance->internal);
+	instance->internal = NULL;
 }
 
 char *uwu_uwuify(uwu_instance *instance, char *input)
@@ -65,12 +67,12 @@ void uwu_perrwu(uwu_instance *instance, char *messsage)
 
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key)
 {
-	return uwu_dict_get(instance->internal.replacement_dictionary, key);
+	return uwu_dict_get(instance->internal->replacement_dictionary, key);
 }
 
 uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const char *value)
 {
-	uint8_t ret = uwu_dict_set(instance->internal.replacement_dictionary, key, value);
+	uint8_t ret = uwu_dict_set(instance->internal->replacement_dictionary, key, value);
 
 	if (ret != 0)
 		instance->errwu = "failed to allocate memory for new item";
@@ -80,7 +82,7 @@ uint8_t uwu_replacement_update(uwu_instance *instance, const char *key, const ch
 
 uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 {
-	uwu_dict_set(instance->internal.replacement_dictionary, key, NULL);
+	uwu_dict_set(instance->internal->replacement_dictionary, key, NULL);
 	return 0;
 }
 

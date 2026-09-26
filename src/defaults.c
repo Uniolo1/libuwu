@@ -13,29 +13,29 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
 	uint8_t ret = 0;
 
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "love", "wuv"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "love", "wuv"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "loved", "wuved"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "loved", "wuved"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "this", "dis"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "this", "dis"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "small", "smol"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "small", "smol"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "windows", "wuduws"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "windows", "wuduws"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "angry", "angi"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "angry", "angi"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "guh", "buh"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "guh", "buh"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "boy", "boi"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "boy", "boi"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "error", "errwu"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "error", "errwu"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "errors", "errwus"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "errors", "errwus"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, "hi", "hai"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "hi", "hai"))
 		ret++;
-	if (uwu_dict_set(instance->internal.replacement_dictionary, ":)", ":3"))
+	if (uwu_dict_set(instance->internal->replacement_dictionary, ":)", ":3"))
 		ret++;
 
 	return ret;
