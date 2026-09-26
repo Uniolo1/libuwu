@@ -39,7 +39,8 @@ int main(int argc, char *argv[])
 	// load default replacements
 	if (uwu_replacement_load_defaults(&instance))
 	{
-		// print to stderr here since we don't exit
+		// there is also uwu_fperrwu which outputs to STREAM instead of stderr,
+		// the call below is the same as uwu_perrwu but I am using it to demonstrate
 		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
 		instance.errwu = NULL; // clear errwu incase another error occurs
 		// usally a good idea (but not required) to exit here

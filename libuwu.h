@@ -93,7 +93,7 @@ void uwu_perrwu(uwu_instance *instance, char *messsage);
 
 /**
  * @brief Prints errwu information, simalarly to uwu_perrwu, but outputs to stream parameter
- * instead of stdout.
+ * instead of stderr.
  *
  * @param instance Pointer to a uwu_instance struct
  * @param message Message printed before error (simalarly to perror)

@@ -67,7 +67,7 @@ void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage)
 
 void uwu_perrwu(uwu_instance *instance, char *messsage)
 {
-	uwu_fperrwu(stdout, instance, messsage);
+	uwu_fperrwu(stderr, instance, messsage);
 }
 
 void uwu_rng_change(uwu_instance *instance, uint64_t (*func)(uint64_t *))
