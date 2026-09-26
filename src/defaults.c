@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: Unlicense
+
 // the header file for defaults.c is shared with uwuify.c
 #include "uwuify.h"
 
