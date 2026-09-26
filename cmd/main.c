@@ -10,6 +10,8 @@
 #include <string.h>
 #include <time.h>
 
+#define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
+
 // *minor* AI usage here (bug-fixing)
 static inline char *write_entire_stdin_to_string(void)
 {
@@ -112,13 +114,20 @@ int main(int argc, char *argv[])
 		instance.errwu = ""; // don't exit, still claer errwu
 	}
 
-	instance.stutter_chance = 6;
+	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
 	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
 
 	if (argc <= 1)
 	{
 		printf("%s\n", uwu_INFO);
-		printf("Usage: %s \"<input>\"", argv[0]);
+
+		printf("Usage: %s <input> [options]\n", argv[0]);
+		printf("\n");
+		printf("Options:\n");
+		printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
+		       DEFAULT_STUTTER_CHANCE);
+		printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
+
 		return 1;
 	}
 
