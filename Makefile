@@ -23,10 +23,10 @@ library: $(OUT)/$(LIB_NAME).a
 $(OUT)/$(LIB_NAME).a: $(LIB_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-shared: $(OUT)/$(LIB_NAME).so.1
+shared: $(OUT)/$(LIB_NAME).so.2
 	@echo "Built: $(abspath $<)"
 
-$(OUT)/$(LIB_NAME).so.1: $(LIB_SRCS)
+$(OUT)/$(LIB_NAME).so.2: $(LIB_SRCS)
 	$(CC) $(CFLAGS) -fPIC -shared -Wl,-soname,$@ -o $@ $^
 
 $(OBJ_DIR)/%.o: src/%.c
