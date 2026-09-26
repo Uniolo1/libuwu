@@ -15,7 +15,7 @@ LIB_SRCS := $(wildcard src/*.c)
 LIB_OBJS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
 ANALYSIS_DIR := $(OUT)/analysis
 
-.PHONY: library shared demo clean analyze
+.PHONY: library shared demo clean analyze loc
 
 library: $(OUT)/$(LIB_NAME).a
 	@echo "Built: $(abspath $<)"
@@ -40,6 +40,10 @@ demo: $(OUT)/$(LIB_NAME).a
 analyze:
 	@rm -rf $(ANALYSIS_DIR)
 	scan-build -o $(ANALYSIS_DIR) --status-bugs $(MAKE) -B library
+
+loc:
+	# cargo install loc
+	loc --exclude LICENSES/*
 
 clean:
 	rm -rf $(OUT)
