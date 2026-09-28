@@ -9,10 +9,9 @@ A library (and program) written in ISO C99 to uwuify text. Originally a Python p
 
 ## Building
 
-> [!NOTE]  
-> I am going to, at some point, switch to [xmake](https://xmake.io/) (will add an alias Makefile)
+Use `xmake` to compile to a static library, and `xmake b uwuify` to compile uwuify!
 
-Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make uwuify` to compile uwuify! This library should also work on Windows but you will have to compile it manually (shouldn't be too hard).
+To compile the test suite, run `xmake b tests`
 
 ## uwuify
 
@@ -32,7 +31,7 @@ int main(void)
 	printf("%s\n", uwu_INFO);
 
 	// initalize instance
-	uwu_instance instance;
+	uwu_instance instance = {0};
 	if (uwu_init(&instance))
 	{
 		// uwu_perrwu works on instances that failed to initalize

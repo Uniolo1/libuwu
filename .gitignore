@@ -1,12 +1,9 @@
 # SPDX-FileCopyrightText: NONE
 # SPDX-License-Identifier: Unlicense
 
-out
+# Xmake cache
+.xmake
+build
 
-# just in case they were accidentally included
-*.o
-*.exe
-*.dll
-*.a
-*.so
-*.so.1
+# MacOS Cache
+.DS_Store

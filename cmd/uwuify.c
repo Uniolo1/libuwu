@@ -120,7 +120,7 @@ static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
 
 int main(int argc, char *argv[])
 {
-	uwu_instance instance;
+	uwu_instance instance = {0};
 	if (uwu_init(&instance))
 	{
 		uwu_perrwu(&instance, "Failed to initalize libuwu");
