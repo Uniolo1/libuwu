@@ -12,10 +12,18 @@
 #include <string.h>
 #include <time.h>
 
+// extra stuff used for seeding
+#if defined(__unix__) || defined(__APPLE__) || defined(_POSIX_VERSION)
+#include <unistd.h>
+#endif
+#define PID_DEFAULT 0
+static uint64_t pid = PID_DEFAULT;
+
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 #define DEFAULT_INPUT_INDEX -1
 
 static bool read_stdin = false;
+static bool print_seed = false;
 static int input_index = DEFAULT_INPUT_INDEX;
 
 // *minor* AI usage here (bug-fixing)
@@ -73,7 +81,8 @@ static void print_help(const char *program_name)
 	printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
 	       DEFAULT_STUTTER_CHANCE);
 	printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
-	printf("  --stdin                   Read from stdin instead of argv[1]");
+	printf("  --print-seed              Print RNG seed after seeding\n");
+	printf("  --stdin                   Read from stdin instead of arguments\n");
 }
 
 static inline void parse_arguments(char *argv[], uwu_instance *instance)
@@ -107,7 +116,8 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 			instance->rng = (uint64_t)strtoul(flag, &end, 10);
 			if (errno == ERANGE || end == flag || *end != '\0')
 			{
-				printf("Expected '--rng-seed=[0+]', got '%s'\n", argv[i]);
+				fprintf(stderr, "Expected '--rng-seed=[0+]', got '%s'\n",
+				        argv[i]);
 				exit(1);
 			}
 			continue;
@@ -115,7 +125,23 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 
 		if ((strcmp(argv[i], "--stdin") == 0))
 		{
+			if (read_stdin)
+			{
+				fprintf(stderr, "'--stdin' set twice!");
+				exit(1);
+			}
 			read_stdin = true;
+			continue;
+		}
+
+		if ((strcmp(argv[i], "--print-seed") == 0))
+		{
+			if (print_seed)
+			{
+				fprintf(stderr, "'--print-seed' set twice!");
+				exit(1);
+			}
+			print_seed = true;
 			continue;
 		}
 
@@ -159,10 +185,16 @@ int main(int _, char *argv[])
 		ret = 4;             // return '4' later when the program ends
 	}
 
+#ifdef _POSIX_VERSION
+	pid = (uint64_t)getpid();
+#endif
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
-	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
+	instance.rng = (uint64_t)time(NULL) ^ pid; // seed RNG used for stuttering
 
 	parse_arguments(argv, &instance);
+
+	if (print_seed)
+		printf("seed: %lu\n", instance.rng);
 
 	char *out;
 	if (read_stdin)

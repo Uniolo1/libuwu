@@ -26,6 +26,7 @@ mkdir -p out
 cd out
 cc -c ../src/*.c -O2 -std=c99
 ar rcs libuwu.a *.o
+cd ..
 ```
 
 And then for `uwuify` (back in the current directory)

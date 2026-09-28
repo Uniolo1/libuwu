@@ -25,11 +25,11 @@ target("tests")
 
 	add_rules("mode.debug")
 	add_cflags("-fsanitize=address,undefined",
-		   "-fno-omit-frame-pointer")
+	           "-fno-omit-frame-pointer")
 	add_ldflags("-fsanitize=address,undefined")
 
 task("test")
-	on_run(function ()
+	on_run(function()
 		os.exec("xmake run tests")
 	end)
 	set_menu({
