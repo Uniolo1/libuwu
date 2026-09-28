@@ -38,7 +38,7 @@ uwuify: $(OUT)/$(LIB_NAME).a
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
 test: $(OUT)/$(LIB_NAME).a
-	$(CC) $(CFLAGS) --std=c99 tests/main.c -I. -L$(OUT) -luwu -o $(OUT)/tests
+	$(CC) -O0 $(CFLAGS) --std=c99 tests/main.c -I. -L$(OUT) -luwu -o $(OUT)/tests
 	@echo "Built: $(abspath $(OUT)/tests)"
 
 
