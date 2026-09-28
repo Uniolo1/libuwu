@@ -9,6 +9,9 @@ A library (and program) written in ISO C99 to uwuify text. Originally a Python p
 
 ## building
 
+> [!NOTE]  
+> I am going to, at some point, switch to [xmake](https://xmake.io/) (will add an alias Makefile)
+
 Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make uwuify` to compile uwuify! This library should also work on Windows but you will have to compile it manually (shouldn't be too hard).
 
 ## uwuify
@@ -78,4 +81,5 @@ int main(int argc, char *argv[])
 	return 0;
 }
 ```
+
 Do note that this library assumes that all input is either UTF8 or ASCI encoded.
