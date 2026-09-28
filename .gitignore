@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: NONE
 # SPDX-License-Identifier: Unlicense
 
+# old output - kept for posterity
+out
+
 # Xmake cache
 .xmake
 build

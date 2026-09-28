@@ -11,7 +11,28 @@ A library (and program) written in ISO C99 to uwuify text. Originally a Python p
 
 Use `xmake` to compile to a static library, and `xmake b uwuify` to compile uwuify!
 
-To compile the test suite, run `xmake b tests`
+To compile and run the test suite, run `xmake test`
+
+### Building manually
+
+> [!NOTE]  
+> The following instructions assume that you are on a UNIX-like system
+
+If you don't have xmake, you _can_ compile it manually.
+
+```sh
+# assumes 'cc' is either Clang or GCC
+mkdir -p out
+cd out
+cc -c ../src/*.c -O2 -std=c99
+ar rcs libuwu.a *.o
+```
+
+And then for `uwuify` (back in the current directory)
+
+```sh
+gcc -I. -Lout cmd/uwuify.c -o out/uwuify -std=c99 -luwu
+```
 
 ## uwuify
 
@@ -31,7 +52,7 @@ int main(void)
 	printf("%s\n", uwu_INFO);
 
 	// initalize instance
-	uwu_instance instance = {0};
+	uwu_instance instance = {0}; // IMPORTANT: may segfault without '= {0}'
 	if (uwu_init(&instance))
 	{
 		// uwu_perrwu works on instances that failed to initalize
