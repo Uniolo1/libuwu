@@ -7,7 +7,7 @@ SPDX-License-Identifier: Unlicense
 
 A library (and program) written in ISO C99 to uwuify text. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
 
-## building
+## Building
 
 > [!NOTE]  
 > I am going to, at some point, switch to [xmake](https://xmake.io/) (will add an alias Makefile)
@@ -18,7 +18,7 @@ Use `make` to compile to a static library, `make shared` to compile to a dynamic
 
 A program using the library, stored in `cmd/`.
 
-## quickstart
+## Quickstart
 
 ```c
 #include <libuwuify.h>
