@@ -5,6 +5,7 @@
 #include "../libuwu.h"
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +13,7 @@
 #include <time.h>
 
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
+static bool read_stdin = false;
 
 // *minor* AI usage here (bug-fixing)
 static inline char *write_entire_stdin_to_string(void)
@@ -68,6 +70,7 @@ static void print_help(const char *program_name)
 	printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
 	       DEFAULT_STUTTER_CHANCE);
 	printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
+	printf("  --stdin                   Read from stdin instead of argv[1]");
 }
 
 static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
@@ -107,10 +110,16 @@ static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
 			continue;
 		}
 
+		if ((strcmp(argv[i], "--stdin") == 0))
+		{
+			read_stdin = true;
+			continue;
+		}
+
 		if ((strcmp(argv[i], "--help") == 0))
 		{
 			print_help(argv[0]);
-			exit(1);
+			exit(0);
 		}
 
 		printf("Unknown argument: %s\n", argv[i]);
@@ -148,7 +157,7 @@ int main(int argc, char *argv[])
 	}
 
 	char *out;
-	if (strcmp(argv[1], "-") == 0)
+	if (read_stdin || strcmp(argv[1], "-") == 0)
 	{
 		char *input = write_entire_stdin_to_string();
 		out = uwu_uwuify(&instance, input);
