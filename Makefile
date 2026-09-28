@@ -37,10 +37,13 @@ uwuify: $(OUT)/$(LIB_NAME).a
 	$(CC) -O2 $(CFLAGS) --std=c99 cmd/uwuify.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
-test: $(OUT)/$(LIB_NAME).a
+tests: $(OUT)/$(LIB_NAME).a
 	$(CC) -O0 $(CFLAGS) --std=c99 tests/main.c -I. -L$(OUT) -luwu -o $(OUT)/tests
 	@echo "Built: $(abspath $(OUT)/tests)"
 
+
+test: tests
+	$(abspath $(OUT)/tests)
 
 analyze:
 	@rm -rf $(ANALYSIS_DIR)
