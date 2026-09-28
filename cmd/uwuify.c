@@ -13,7 +13,10 @@
 #include <time.h>
 
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
+#define DEFAULT_INPUT_INDEX -1
+
 static bool read_stdin = false;
+static int input_index = DEFAULT_INPUT_INDEX;
 
 // *minor* AI usage here (bug-fixing)
 static inline char *write_entire_stdin_to_string(void)
@@ -73,9 +76,9 @@ static void print_help(const char *program_name)
 	printf("  --stdin                   Read from stdin instead of argv[1]");
 }
 
-static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
+static inline void parse_arguments(char *argv[], uwu_instance *instance)
 {
-	for (int i = 2; argv[i] != NULL; i++)
+	for (int i = 1; argv[i] != NULL; i++)
 	{
 		char *flag = NULL;
 
@@ -122,14 +125,27 @@ static inline void parse_more_arguments(char *argv[], uwu_instance *instance)
 			exit(0);
 		}
 
-		printf("Unknown argument: %s\n", argv[i]);
+		if (input_index == DEFAULT_INPUT_INDEX)
+			input_index = i;
+		else
+		{
+			printf("Unknown argument: %s\n", argv[i]);
+			exit(1);
+		}
+	}
+
+	if (input_index == DEFAULT_INPUT_INDEX)
+	{
+		print_help(argv[0]);
 		exit(1);
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int _, char *argv[])
 {
+	int ret = 0;
 	uwu_instance instance = {0};
+
 	if (uwu_init(&instance))
 	{
 		uwu_perrwu(&instance, "Failed to initalize libuwu");
@@ -140,24 +156,16 @@ int main(int argc, char *argv[])
 	{
 		uwu_perrwu(&instance, "Failed to load replacements");
 		instance.errwu = ""; // don't exit, still claer errwu
+		ret = 4;             // return '4' later when the program ends
 	}
 
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
 	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering
 
-	if (argc <= 1 || (strcmp(argv[1], "--help") == 0))
-	{
-		print_help(argv[0]);
-		return 1;
-	}
-
-	if (argc >= 3)
-	{
-		parse_more_arguments(argv, &instance);
-	}
+	parse_arguments(argv, &instance);
 
 	char *out;
-	if (read_stdin || strcmp(argv[1], "-") == 0)
+	if (read_stdin)
 	{
 		char *input = write_entire_stdin_to_string();
 		out = uwu_uwuify(&instance, input);
@@ -165,7 +173,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		out = uwu_uwuify(&instance, argv[1]);
+		out = uwu_uwuify(&instance, argv[input_index]);
 	}
 
 	if (out == NULL)
@@ -173,6 +181,9 @@ int main(int argc, char *argv[])
 		uwu_perrwu(&instance, "uwuify");
 		return 3;
 	}
+
 	printf("%s\n", out);
-	return 0;
+
+	free(out);
+	return ret;
 }
