@@ -131,7 +131,8 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 
 	char *input = uwu_strdup(input_passed); // To fix a bug involving immutable input we
 	                                        // create and use an output
-	char **ret = &output;                   // return
+
+	char **ret = &output; // return
 
 	if (output == NULL || input == NULL)
 	{
