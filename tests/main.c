@@ -19,7 +19,9 @@ int uwuify_Error(void)
 	if (out != NULL)
 		printf("\"%s\" == \"Errwu\"\n", out);
 
-	return strcmp(out, "Errwu");
+	int ret = strcmp(out, "Errwu");
+	free(out);
+	return ret;
 }
 
 int no_multibyte_stutter(void)
@@ -30,7 +32,9 @@ int no_multibyte_stutter(void)
 	if (out != NULL)
 		printf("\"%s\" == \"π\"\n", out);
 
-	return strcmp(out, "π");
+	int ret = strcmp(out, "π");
+	free(out);
+	return ret;
 }
 
 static inline char get_rand_char(void)
@@ -107,5 +111,7 @@ int main(void)
 	long result = run_tests(instance_test);
 	if (result != 0)
 		result += 2;
+
+	testc_free(instance_test);
 	return (int)result;
 }
