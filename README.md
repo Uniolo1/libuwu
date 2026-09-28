@@ -21,11 +21,12 @@ A program using the library, stored in `cmd/`.
 ## Quickstart
 
 ```c
-#include <libuwuify.h>
+#include <libuwu.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	// print quick information about the library
 	printf("%s\n", uwu_INFO);
@@ -46,15 +47,16 @@ int main(int argc, char *argv[])
 		// the call below is the same as uwu_perrwu but I am using it to demonstrate
 		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
 		instance.errwu = NULL; // clear errwu incase another error occurs
-		// usally a good idea (but not required) to exit here
+		                       // usally a good idea (but not required) to exit here
 	}
 
 	instance.stutter_chance = 8; // chance the stutter chance to be 1 in every 8 messages
-	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering, seed it how you would seed srand.
+	instance.rng = (uint64_t)time(
+	    NULL); // seed RNG used for stuttering, seed it how you would seed srand.
 
 	// Notably, you can also change the function used to generate a random number like so:
-	//     uint64_t rng_next(uint64_t *state) {(*state)++; return *state;} // example function
-	//     uwu_rng_change(&instance, rng_next);
+	//     uint64_t rng_next(uint64_t *state) {(*state)++; return *state;} // example
+	//     function uwu_rng_change(&instance, rng_next);
 
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":(", ":)"))
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
 	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :(");
 	if (output == NULL)
 	{
-		uwu_perrwu(&instance, "Failed to uwuify text")
+		uwu_perrwu(&instance, "Failed to uwuify text");
 		return 3;
 	}
 
@@ -75,7 +77,8 @@ int main(int argc, char *argv[])
 	printf("%s\n", output);
 	free(output); // output is malloc'd, remeber to free it!
 
-	// if your program exits here, you can probably skip this step, but otherwies make sure to close your instance!
+	// if your program exits here, you can probably skip this step, but otherwies make sure
+	// to close your instance!
 	uwu_close(&instance);
 
 	return 0;
