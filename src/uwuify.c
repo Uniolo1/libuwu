@@ -11,8 +11,8 @@
 #include "dictionary.h"
 #include "parse.h"
 
-const char *uwu_INFO = "libuwu v2.1.4 <https://github.com/uniolo1/libuwu>";
-const uint16_t uwu_VERSION[3] = {2, 1, 4};
+const char *uwu_INFO = "libuwu v2.1.5 <https://github.com/uniolo1/libuwu>";
+const uint16_t uwu_VERSION[3] = {2, 1, 5};
 // 'uwu_number_of_default_replacements' defined in defaults.c
 #define DEFAULT_STUTTER_CHANCE 6 // 1 in 6
 

@@ -16,6 +16,12 @@ target("uwuify")
 	add_deps("libuwu")
 	add_includedirs(".")
 
+target("quickstart")
+	set_kind("binary")
+	add_files("cmd/quickstart.c")
+	add_deps("libuwu")
+	add_includedirs(".")
+
 -- NOTE: tests may fail to build with MSVC
 target("tests")
 	set_kind("binary")

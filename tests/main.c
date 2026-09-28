@@ -1,7 +1,6 @@
 #define TESTC_H_IMPLEMENTATION
 #include "testc.h"
 
-// demo programs use relative paths so clangd can shutup
 #include "../libuwu.h"
 
 #include <stdio.h>
@@ -9,7 +8,7 @@
 #include <string.h>
 
 // declared globally
-uwu_instance instance_uwu;
+uwu_instance instance_uwu = {0};
 
 int uwuify_Error(void)
 {

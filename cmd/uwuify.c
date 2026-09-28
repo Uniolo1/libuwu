@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-// demo programs use relative paths so clangd can shutup
-#include "../libuwu.h"
+#include <libuwu.h>
 
 #include <errno.h>
 #include <stdbool.h>
@@ -14,8 +13,10 @@
 
 // extra stuff used for seeding
 #if defined(__unix__) || defined(__APPLE__) || defined(_POSIX_VERSION)
+#define RUNNING_ON_POSIX
 #include <unistd.h>
 #endif
+
 #define PID_DEFAULT 0
 static uint64_t pid = PID_DEFAULT;
 
@@ -185,11 +186,12 @@ int main(int _, char *argv[])
 		ret = 4;             // return '4' later when the program ends
 	}
 
-#ifdef _POSIX_VERSION
+#ifdef RUNNING_ON_POSIX
 	pid = (uint64_t)getpid();
 #endif
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
-	instance.rng = (uint64_t)time(NULL) ^ pid; // seed RNG used for stuttering
+	instance.rng = (uint64_t)time(NULL) ^ (uint64_t)(uintptr_t)&instance.rng ^
+	               pid; // seed RNG used for stuttering
 
 	parse_arguments(argv, &instance);
 

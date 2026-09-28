@@ -122,16 +122,20 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 
 // NOTE: function prototype in "uwuify.h"
 // WARNING: AI used heavily here (primarily in the string resizing logic)
-char *uwu_uwuify(uwu_instance *instance, char *input)
+char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 {
 	// create output string
 	size_t output_len = 0;
-	size_t output_cap = strlen(input) + 1;
+	size_t output_cap = strlen(input_passed) + 1;
 	char *output = malloc(output_cap);
 
-	if (output == NULL)
+	char *input = uwu_strdup(input_passed); // To fix a bug involving immutable input we
+	                                        // create and use an output
+	char **ret = &output;                   // return
+
+	if (output == NULL || input == NULL)
 	{
-		instance->errwu = "failed to allocate memory for output string";
+		instance->errwu = "failed to allocate memory";
 		return NULL;
 	}
 
@@ -146,9 +150,9 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 		{
 			if (!ensure_output_capacity(&output, &output_cap, output_len, 1))
 			{
-				free(output);
 				instance->errwu = "failed to resize output string";
-				return NULL;
+				ret = NULL;
+				goto exit_and_free;
 			}
 
 			output[output_len++] = ' ';
@@ -171,9 +175,9 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 			{
 				if (word_len > SIZE_MAX - 2)
 				{
-					free(output);
 					instance->errwu = "failed to resize output string";
-					return NULL;
+					ret = NULL;
+					goto exit_and_free;
 				}
 
 				additional = word_len + 2;
@@ -182,9 +186,9 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 			if (!ensure_output_capacity(&output, &output_cap, output_len,
 			                            additional))
 			{
-				free(output);
 				instance->errwu = "failed to resize output string";
-				return NULL;
+				ret = NULL;
+				goto exit_and_free;
 			}
 
 			if (stutter)
@@ -215,9 +219,9 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 			{
 				if (match_len > SIZE_MAX - 2)
 				{
-					free(output);
 					instance->errwu = "failed to resize output string";
-					return NULL;
+					ret = NULL;
+					goto exit_and_free;
 				}
 
 				additional = match_len + 2;
@@ -230,9 +234,9 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 			if (!ensure_output_capacity(&output, &output_cap, output_len,
 			                            additional))
 			{
-				free(output);
 				instance->errwu = "failed to resize output string";
-				return NULL;
+				ret = NULL;
+				goto exit_and_free;
 			}
 
 			if (stutter)
@@ -249,5 +253,12 @@ char *uwu_uwuify(uwu_instance *instance, char *input)
 		word = strtok(NULL, " ");
 	}
 
-	return output;
+exit_and_free:
+	free(input);
+	if (ret != &output)
+	{
+		free(output);
+		return NULL;
+	}
+	return *ret;
 }

@@ -1,47 +1,6 @@
-<!--
-SPDX-FileCopyrightText: NONE
-SPDX-License-Identifier: Unlicense
--->
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: Unlicense
 
-# libuwu
-
-A library (and program) written in ISO C99 to uwuify text. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
-
-## Building
-
-Use `xmake` to compile to a static library, and `xmake b uwuify` to compile uwuify!
-
-To compile and run the test suite, run `xmake test`
-
-### Building manually
-
-> [!NOTE]  
-> The following instructions assume that you are on a UNIX-like system
-
-If you don't have xmake, you _can_ compile it manually.
-
-```sh
-# assumes 'cc' is either Clang or GCC
-mkdir -p out
-cd out
-cc -c ../src/*.c -O2 -std=c99
-ar rcs libuwu.a *.o
-cd ..
-```
-
-And then for `uwuify` (back in the current directory)
-
-```sh
-gcc -I. -Lout cmd/uwuify.c -o out/uwuify -std=c99 -luwu
-```
-
-## uwuify
-
-A program using the library, stored in `cmd/`.
-
-## Quickstart
-
-```c
 #include <libuwu.h>
 
 #include <stdio.h>
@@ -108,6 +67,3 @@ int main(void)
 
 	return 0;
 }
-```
-
-Do note that this library assumes that all input is either UTF8 or ASCI encoded.
