@@ -65,8 +65,8 @@ struct testc_tests
 	testcs_test *tests;
 };
 
-const char *testc_INFO = "testc v1.0.0 <https://github.com/uniolo1/testc>";
-const unsigned testc_VERSION[3] = {1, 0, 0};
+const char *testc_INFO = "testc v1.0.1 <https://github.com/uniolo1/testc>";
+const unsigned testc_VERSION[3] = {1, 0, 1};
 
 testc_tests *testc_get(void)
 {
@@ -105,6 +105,7 @@ int testc_init(testc_tests *instance)
 
 void testc_free(testc_tests *instance)
 {
+	free(instance->tests);
 	free(instance);
 }
 
