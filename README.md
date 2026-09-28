@@ -5,15 +5,15 @@ SPDX-License-Identifier: Unlicense
 
 # libuwu
 
-A library (and demo program) written in ISO C99 to uwuify text. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
+A library (and program) written in ISO C99 to uwuify text. Originally a Python program but then rewritten to learn how to make a C library. I have forgotten the motiviation for the original Python version.
 
 ## building
 
-Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make demo` to compile the demo! This library should also work on Windows but you will have to compile it manually (shouldn't be too hard).
+Use `make` to compile to a static library, `make shared` to compile to a dynamic library, and `make uwuify` to compile uwuify! This library should also work on Windows but you will have to compile it manually (shouldn't be too hard).
 
 ## uwuify
 
-A demo program, stored in `cmd/`.
+A program using the library, stored in `cmd/`.
 
 ## quickstart
 
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	// load default replacements
 	if (uwu_replacement_load_defaults(&instance))
 	{
-		// there is also uwu_fperrwu which outputs to STREAM instead of stderr,
+		// there is also uwu_fperrwu which outputs to 'stream' instead of stderr,
 		// the call below is the same as uwu_perrwu but I am using it to demonstrate
 		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
 		instance.errwu = NULL; // clear errwu incase another error occurs
@@ -50,14 +50,13 @@ int main(int argc, char *argv[])
 	instance.rng = (uint64_t)time(NULL); // seed RNG used for stuttering, seed it how you would seed srand.
 
 	// Notably, you can also change the function used to generate a random number like so:
-	//     uint64_t rng_next(uint64_t *state) {(void)state; return 0;} // example function
+	//     uint64_t rng_next(uint64_t *state) {(*state)++; return *state;} // example function
 	//     uwu_rng_change(&instance, rng_next);
 
 	// set customn replacement
 	if (uwu_replacement_update(&instance, ":(", ":)"))
 	{
-		// print to stderr here since we don't exit
-		uwu_fperrwu(stderr, &instance, "Failed to set custom replacement");
+		uwu_perrwu(&instance, "Failed to set custom replacement");
 		return 2;
 	}
 
@@ -79,3 +78,4 @@ int main(int argc, char *argv[])
 	return 0;
 }
 ```
+Do note that this library assumes that all input is either UTF8 or ASCI encoded.

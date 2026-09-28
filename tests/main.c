@@ -48,7 +48,7 @@ static inline char get_rand_char(void)
 	case 4:
 		return 'W';
 	default:
-		puts("Impossible statement reache!");
+		puts("Impossible statement reached!");
 		exit(1);
 	}
 }
@@ -104,5 +104,8 @@ int main(void)
 	testc_add_test(instance_test, no_multibyte_stutter, "no-multi-byte-stutter");
 	testc_add_test(instance_test, large_test_9064, "large-9064");
 
-	return (int)run_tests(instance_test);
+	long result = run_tests(instance_test);
+	if (result != 0)
+		result += 2;
+	return (int)result;
 }

@@ -8,10 +8,12 @@
 
 #include "dictionary.h"
 
-const uint8_t uwu_number_of_default_replacements = 12;
+const uint8_t uwu_number_of_default_replacements = 13;
 static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 {
 	uint8_t ret = 0;
+
+	// TODO: sort alphabetically
 
 	if (uwu_dict_set(instance->internal->replacement_dictionary, "love", "wuv"))
 		ret++;
@@ -36,6 +38,8 @@ static inline uint8_t private_replacement_load_defaults(uwu_instance *instance)
 	if (uwu_dict_set(instance->internal->replacement_dictionary, "hi", "hai"))
 		ret++;
 	if (uwu_dict_set(instance->internal->replacement_dictionary, ":)", ":3"))
+		ret++;
+	if (uwu_dict_set(instance->internal->replacement_dictionary, "library", "wibwary"))
 		ret++;
 
 	return ret;

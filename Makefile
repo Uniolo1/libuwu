@@ -15,7 +15,7 @@ LIB_SRCS := $(wildcard src/*.c)
 LIB_OBJS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(LIB_SRCS))
 ANALYSIS_DIR := $(OUT)/analysis
 
-.PHONY: library shared demo clean analyze loc test
+.PHONY: library shared uwuify clean analyze loc test
 
 library: $(OUT)/$(LIB_NAME).a
 	@echo "Built: $(abspath $<)"
@@ -33,7 +33,7 @@ $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) -O2 $(CFLAGS) -c $< -o $@
 
-demo: $(OUT)/$(LIB_NAME).a
+uwuify: $(OUT)/$(LIB_NAME).a
 	$(CC) -O2 $(CFLAGS) --std=c99 cmd/uwuify.c -I. -L$(OUT) -luwu -o $(OUT)/uwuify
 	@echo "Built: $(abspath $(OUT)/uwuify)"
 
