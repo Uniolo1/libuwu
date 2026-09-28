@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: NONE
 # SPDX-License-Identifier: Unlicense
 
+# WARNING: Use of AI
+
 CC      := gcc
 CFLAGS  := -Wall -Wextra -pedantic -g -fno-omit-frame-pointer -D_ISOC99_SOURCE
 AR      := ar
