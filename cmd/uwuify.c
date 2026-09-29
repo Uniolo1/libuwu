@@ -12,9 +12,12 @@
 #include <time.h>
 
 // extra stuff used for seeding
-#if defined(__unix__) || defined(__APPLE__) || defined(_POSIX_VERSION)
+#if defined(RUNNING_ON_POSIX) || defined(__unix__) || defined(__APPLE__) ||                   \
+    defined(_POSIX_VERSION)
+
 #define RUNNING_ON_POSIX
 #include <unistd.h>
+
 #endif
 
 #define PID_DEFAULT 0
@@ -62,6 +65,12 @@ static inline char *write_entire_stdin_to_string(void)
 	return output;
 }
 
+static inline void generate_seed(uint64_t *seed_output)
+{
+	// seed 'instance.rng' - used for stuttering
+	*seed_output = (uint64_t)time(NULL) ^ (uint64_t)(uintptr_t)seed_output ^ pid;
+}
+
 static inline char *get_argument(char *restrict arg, const char *restrict name)
 {
 	size_t len = strlen(name);
@@ -76,8 +85,7 @@ static void print_help(const char *program_name)
 {
 	printf("%s\n", uwu_INFO);
 
-	printf("Usage: %s <input> [options]\n", program_name);
-	printf("\n");
+	printf("Usage: %s <input> [options]\n\n", program_name);
 	printf("Options:\n");
 	printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
 	       DEFAULT_STUTTER_CHANCE);
@@ -190,8 +198,7 @@ int main(int _, char *argv[])
 	pid = (uint64_t)getpid();
 #endif
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
-	instance.rng = (uint64_t)time(NULL) ^ (uint64_t)(uintptr_t)&instance.rng ^
-	               pid; // seed RNG used for stuttering
+	generate_seed(&instance.rng); // seed RNG used for stuttering
 
 	parse_arguments(argv, &instance);
 
