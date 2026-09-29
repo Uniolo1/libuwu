@@ -90,42 +90,44 @@ int get_items_in_replacement_dictionary(void)
 		return 1;
 	}
 
-	int ret = 0;
+	instance_uwu.errwu = "";
 
-	ret = ret + uwu_replacement_update(&instance_uwu, "a", "b");
-	ret = ret + uwu_replacement_update(&instance_uwu, "c", "d");
-	ret = ret + uwu_replacement_update(&instance_uwu, "e", "f");
+	uwu_replacement_update(&instance_uwu, "a", "b");
+	uwu_replacement_update(&instance_uwu, "c", "d");
+	uwu_replacement_update(&instance_uwu, "e", "f");
 
-	if (ret != 0)
-		return ret;
+	if (instance_uwu.errwu[0] != '\0')
+		return 2;
 
 	char **output = NULL;
 	long len = uwu_replacement_get_items(&instance_uwu, &output);
 	if (len == -1 || output == NULL)
-		return 2;
+		return 3;
+
+	int ret = 0;
 
 	printf("'%ld' == '3'\n", len);
 	if (len != 3)
 	{
-		ret = 3;
+		ret = 4;
 		goto exit_function;
 	}
 
 	puts("output[0] == 'a'");
 	if (strcmp(output[0], "a") == 0)
-		ret = 4;
+		ret = 5;
 
 	puts("output[1] == 'c'");
 	if (strcmp(output[1], "c") == 0)
-		ret = 5;
+		ret = 6;
 
 	puts("output[2] == 'e'");
 	if (strcmp(output[2], "e") == 0)
-		ret = 6;
+		ret = 7;
 
 	puts("output[3] == NULL");
 	if (output[3] != NULL)
-		ret = 7;
+		ret = 8;
 
 exit_function:
 	uwu_free_result_of_replacement_get_items(&output);
