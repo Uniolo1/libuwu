@@ -234,5 +234,5 @@ long uwu_dict_get_items(uwu_internal_Dictionary *dict, char ***output)
 	items[index] = NULL;
 	*output = items;
 
-	return 0;
+	return (long)index;
 }
