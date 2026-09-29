@@ -198,3 +198,41 @@ void uwu_dict_free(uwu_internal_Dictionary *dict)
 	free(dict->buckets);
 	free(dict);
 }
+
+long uwu_dict_get_items(uwu_internal_Dictionary *dict, char ***output)
+{
+	char **items = malloc((dict->size + 1) * sizeof(char *));
+	if (!items)
+		return -1;
+
+	size_t index = 0;
+
+	for (size_t i = 0; i < dict->capacity; i++)
+	{
+		uwu_internal_Node *curr = dict->buckets[i];
+
+		while (curr)
+		{
+			items[index] = uwu_strdup(curr->key);
+
+			if (!items[index])
+			{
+				// Clean up anything already allocated
+				for (size_t j = 0; j < index; j++)
+					free(items[j]);
+
+				free(items);
+				*output = NULL;
+				return -1;
+			}
+
+			index++;
+			curr = curr->next;
+		}
+	}
+
+	items[index] = NULL;
+	*output = items;
+
+	return 0;
+}

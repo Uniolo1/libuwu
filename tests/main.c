@@ -79,6 +79,59 @@ int large_test_9064(void)
 	return 0;
 }
 
+int get_items_in_replacement_dictionary(void)
+{
+	// this is more to test against segfaults
+
+	// reinitalie:
+	if (uwu_init(&instance_uwu))
+	{
+		uwu_perrwu(&instance_uwu, "Failed to initalize libuwu");
+		return 1;
+	}
+
+	int ret = 0;
+
+	ret = ret + uwu_replacement_update(&instance_uwu, "a", "b");
+	ret = ret + uwu_replacement_update(&instance_uwu, "c", "d");
+	ret = ret + uwu_replacement_update(&instance_uwu, "e", "f");
+
+	if (ret != 0)
+		return ret;
+
+	char **output = NULL;
+	long len = uwu_replacement_get_items(&instance_uwu, &output);
+	if (len == -1 || output == NULL)
+		return 2;
+
+	printf("'%ld' == '3'\n", len);
+	if (len != 3)
+	{
+		ret = 3;
+		goto exit_function;
+	}
+
+	puts("output[0] == 'a'\n");
+	if (strcmp(output[0], "a") == 0)
+		ret = 4;
+
+	puts("output[1] == 'c'\n");
+	if (strcmp(output[1], "c") == 0)
+		ret = 5;
+
+	puts("output[2] == 'e'\n");
+	if (strcmp(output[2], "e") == 0)
+		ret = 6;
+
+	puts("output[3] == NULL\n");
+	if (output[3] != NULL)
+		ret = 7;
+
+exit_function:
+	uwu_free_result_of_replacement_get_items(&output);
+	return ret;
+}
+
 int main(void)
 {
 	printf("%s\n", uwu_INFO);
@@ -106,11 +159,15 @@ int main(void)
 	testc_add_test(instance_test, uwuify_Error, "uwuify-Error");
 	testc_add_test(instance_test, no_multibyte_stutter, "no-multi-byte-stutter");
 	testc_add_test(instance_test, large_test_9064, "large-9064");
+	// REINITALIZES instance_uwu DO LAST:
+	testc_add_test(instance_test, get_items_in_replacement_dictionary,
+	               "get-items-in-replacement-dictionary");
 
 	long result = run_tests(instance_test);
 	if (result != 0)
 		result += 2;
 
 	testc_free(instance_test);
+	uwu_close(&instance_uwu);
 	return (int)result;
 }

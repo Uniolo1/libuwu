@@ -49,6 +49,8 @@ void uwu_close(uwu_instance *instance)
 {
 	if (instance->internal == NULL)
 		return;
+
+	uwu_dict_free(instance->internal->replacement_dictionary);
 	free(instance->internal);
 	instance->internal = NULL;
 }
@@ -99,6 +101,23 @@ uint8_t uwu_replacement_remove(uwu_instance *instance, const char *key)
 {
 	uwu_dict_remove(instance->internal->replacement_dictionary, key);
 	return 0;
+}
+
+long uwu_replacement_get_items(uwu_instance *instance, char ***output)
+{
+	return uwu_dict_get_items(instance->internal->replacement_dictionary, output);
+}
+
+void uwu_free_result_of_replacement_get_items(char ***input)
+{
+	if (input == NULL || *input == NULL)
+		return;
+
+	for (size_t i = 0; (*input)[i] != NULL; i++)
+		free((*input)[i]);
+
+	free(*input);
+	*input = NULL;
 }
 
 /*

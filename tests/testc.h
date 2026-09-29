@@ -160,7 +160,8 @@ long run_tests(testc_tests *instance)
 			printf("[0] PASS: \"%s\" (%zu)\n", instance->tests[i].name, i);
 	}
 
-	printf("\nSummary: %zu/%zu tests passed", (instance->count - failed), instance->count);
+	printf("\nSummary: %zu/%zu tests passed.\n", (instance->count - failed),
+	       instance->count);
 	return failed;
 }
 

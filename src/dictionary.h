@@ -13,6 +13,7 @@ int uwu_dict_set(uwu_internal_Dictionary *dict, const char *key, const char *val
 int uwu_dict_remove(uwu_internal_Dictionary *dict, const char *key);
 char *uwu_dict_get(uwu_internal_Dictionary *dict, const char *key);
 void uwu_dict_free(uwu_internal_Dictionary *dict);
+long uwu_dict_get_items(uwu_internal_Dictionary *dict, char ***output);
 
 // declared here cuz first used here:
 char *uwu_strdup(const char *input);

@@ -146,4 +146,21 @@ uint8_t uwu_replacement_load_defaults(uwu_instance *instance);
  */
 char *uwu_replacement_get_value(uwu_instance *instance, const char *key);
 
+/**
+ * @brief Get list of keys in the replacement dictionary
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param output Pointer to array of strings, will be overwritten with array containing the
+ * keys. Must be freed with 'uwu_free_result_of_replacement_get_items'
+ * @return The length of the array of keys (written to output), -1 on failure.
+ */
+long uwu_replacement_get_items(uwu_instance *instance, char ***output);
+
+/**
+ * @brief Frees result of 'uwu_replacement_get_items'
+ *
+ * @param input Same pointer that was passed to uwu_replacement_get_items
+ */
+void uwu_free_result_of_replacement_get_items(char ***input);
+
 #endif
