@@ -68,6 +68,10 @@ static inline char *write_entire_stdin_to_string(void)
 static inline void generate_seed(uint64_t *seed_output)
 {
 	// seed 'instance.rng' - used for stuttering
+
+#ifdef RUNNING_ON_POSIX
+	pid = (uint64_t)getpid();
+#endif
 	*seed_output = (uint64_t)time(NULL) ^ (uint64_t)(uintptr_t)seed_output ^ pid;
 }
 
@@ -194,9 +198,6 @@ int main(int _, char *argv[])
 		ret = 4;             // return '4' later when the program ends
 	}
 
-#ifdef RUNNING_ON_POSIX
-	pid = (uint64_t)getpid();
-#endif
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
 	generate_seed(&instance.rng); // seed RNG used for stuttering
 
