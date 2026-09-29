@@ -25,7 +25,7 @@ typedef struct uwu_instance_internal uwu_instance_internal;
  * Must be initalized with 'uwu_init(&instance)', NEVER use an uninitalized
  * instance!
  */
-typedef struct
+typedef struct uwu_instance
 {
 	uwu_instance_internal *internal; // internal use only!
 	uint8_t stutter_chance;
