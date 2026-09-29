@@ -122,19 +122,16 @@ static inline bool ensure_output_capacity(char **output, size_t *capacity, size_
 
 // NOTE: function prototype in "uwuify.h"
 // WARNING: AI used heavily here (primarily in the string resizing logic)
-char *uwu_uwuify(uwu_instance *instance, char *input_passed)
+char *uwu_uwuify_mutonly(uwu_instance *instance, char *input)
 {
 	// create output string
 	size_t output_len = 0;
-	size_t output_cap = strlen(input_passed) + 1;
+	size_t output_cap = strlen(input) + 1;
 	char *output = malloc(output_cap);
-
-	char *input = uwu_strdup(input_passed); // To fix a bug involving immutable input we
-	                                        // create and use an output
 
 	char **ret = &output; // return
 
-	if (output == NULL || input == NULL)
+	if (output == NULL)
 	{
 		instance->errwu = "failed to allocate memory";
 		return NULL;
@@ -153,7 +150,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 			{
 				instance->errwu = "failed to resize output string";
 				ret = NULL;
-				goto exit_and_free;
+				goto exit_uwuify;
 			}
 
 			output[output_len++] = ' ';
@@ -178,7 +175,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 				{
 					instance->errwu = "failed to resize output string";
 					ret = NULL;
-					goto exit_and_free;
+					goto exit_uwuify;
 				}
 
 				additional = word_len + 2;
@@ -189,7 +186,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 			{
 				instance->errwu = "failed to resize output string";
 				ret = NULL;
-				goto exit_and_free;
+				goto exit_uwuify;
 			}
 
 			if (stutter)
@@ -222,7 +219,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 				{
 					instance->errwu = "failed to resize output string";
 					ret = NULL;
-					goto exit_and_free;
+					goto exit_uwuify;
 				}
 
 				additional = match_len + 2;
@@ -237,7 +234,7 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 			{
 				instance->errwu = "failed to resize output string";
 				ret = NULL;
-				goto exit_and_free;
+				goto exit_uwuify;
 			}
 
 			if (stutter)
@@ -254,12 +251,26 @@ char *uwu_uwuify(uwu_instance *instance, char *input_passed)
 		word = strtok(NULL, " ");
 	}
 
-exit_and_free:
-	free(input);
+exit_uwuify:
 	if (ret != &output)
 	{
 		free(output);
 		return NULL;
 	}
 	return *ret;
+}
+
+char *uwu_uwuify(uwu_instance *instance, char *input)
+{
+	char *input_dupe = uwu_strdup(input); // To fix a bug involving immutable input we
+	                                      // create and use an output
+
+	if (input_dupe == NULL)
+	{
+		return NULL;
+	}
+
+	char *ret = uwu_uwuify_mutonly(instance, input_dupe);
+	free(input_dupe);
+	return ret;
 }

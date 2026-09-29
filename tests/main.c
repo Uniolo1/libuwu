@@ -66,7 +66,7 @@ int large_test_9064(void)
 	for (int i = 0; i < 9064; i++)
 		input[i] = get_rand_char();
 
-	char *output = uwu_uwuify(&instance_uwu, input);
+	char *output = uwu_uwuify_mutonly(&instance_uwu, input);
 
 	// ensure output is null-terminated
 	for (int i = 0; output[i] != '\0'; i++)

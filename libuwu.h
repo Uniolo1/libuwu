@@ -76,10 +76,21 @@ void uwu_close(uwu_instance *instance);
  * @brief Uwuifies text
  *
  * @param instance Pointer to a uwu_instance struct
+ * @param input String being uwuified
  * @return An uwuified malloc' string on success and NULL on error with errwu being set
  * (see uwu_perrwu)
  */
 char *uwu_uwuify(uwu_instance *instance, char *input);
+
+/**
+ * @brief 'uwu_uwuify' but it avoids copying 'input', can only be used on mutable strings.
+ *
+ * @param instance Pointer to a uwu_instance struct
+ * @param input String being uwuified, must be mutable.
+ * @return An uwuified malloc' string on success and NULL on error with errwu being set
+ * (see uwu_perrwu)
+ */
+char *uwu_uwuify_mutonly(uwu_instance *instance, char *input);
 
 /**
  * @brief Prints errwu information, simalarly to perror. Outputs only messsage

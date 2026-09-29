@@ -209,7 +209,7 @@ int main(int _, char *argv[])
 	if (read_stdin)
 	{
 		char *input = write_entire_stdin_to_string();
-		out = uwu_uwuify(&instance, input);
+		out = uwu_uwuify_mutonly(&instance, input);
 		free(input);
 	}
 	else

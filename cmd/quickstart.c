@@ -50,6 +50,7 @@ int main(void)
 	}
 
 	// uwuify some text!
+	// worth noting: 'uwu_uwuify_mutonly' is faster but can only be used on mutable strings
 	char *output = uwu_uwuify(&instance, "Hello I am a small pretty little uwu :(");
 	if (output == NULL)
 	{
