@@ -4,12 +4,15 @@
 #include <libuwu.h>
 
 #include <errno.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "interactive.h"
 
 // extra stuff used for seeding
 #if defined(RUNNING_ON_POSIX) || defined(__unix__) || defined(__APPLE__) ||                   \
@@ -27,8 +30,11 @@ static uint64_t pid = PID_DEFAULT;
 #define DEFAULT_INPUT_INDEX -1
 
 static bool read_stdin = false;
+static bool do_interactive = false;
 static bool print_seed = false;
 static int input_index = DEFAULT_INPUT_INDEX;
+
+uwu_instance instance = {0};
 
 // *minor* AI usage here (bug-fixing)
 static inline char *write_entire_stdin_to_string(void)
@@ -94,6 +100,7 @@ static void print_help(const char *program_name)
 	printf("  --stutter-chance=<0-256>  Stutter chance (default: %d)\n",
 	       DEFAULT_STUTTER_CHANCE);
 	printf("  --rng-seed=<0+>           RNG seed (default: UNIX time)\n");
+	printf("  --interactive             Start in interactive mode\n");
 	printf("  --print-seed              Print RNG seed after seeding\n");
 	printf("  --stdin                   Read from stdin instead of arguments\n");
 }
@@ -147,6 +154,17 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 			continue;
 		}
 
+		if ((strcmp(argv[i], "--interactive") == 0) || (strcmp(argv[i], "-I") == 0))
+		{
+			if (do_interactive)
+			{
+				fprintf(stderr, "--interactive' set twice!");
+				exit(1);
+			}
+			do_interactive = true;
+			continue;
+		}
+
 		if ((strcmp(argv[i], "--print-seed") == 0))
 		{
 			if (print_seed)
@@ -172,18 +190,15 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 			exit(1);
 		}
 	}
-
-	if (input_index == DEFAULT_INPUT_INDEX)
-	{
-		print_help(argv[0]);
-		exit(1);
-	}
 }
 
 int main(int _, char *argv[])
 {
 	int ret = 0;
-	uwu_instance instance = {0};
+
+	// setup signal handlers
+	signal(SIGINT, handle_keyboard_exit);
+	signal(SIGTERM, handle_keyboard_exit);
 
 	if (uwu_init(&instance))
 	{
@@ -206,26 +221,44 @@ int main(int _, char *argv[])
 	if (print_seed)
 		printf("seed: %lu\n", instance.rng);
 
-	char *out;
-	if (read_stdin)
+	char *out = NULL;
+
+	if (read_stdin && do_interactive)
 	{
-		char *input = write_entire_stdin_to_string();
-		out = uwu_uwuify_mutonly(&instance, input);
-		free(input);
+		fprintf(stderr, "Both 'interactive' and 'stdin' cannot be set!\n");
+		ret = 4;
+	}
+	else if (do_interactive)
+	{
+		ret = interactive_mode();
 	}
 	else
 	{
-		out = uwu_uwuify(&instance, argv[input_index]);
+		if (read_stdin)
+		{
+			char *input = write_entire_stdin_to_string();
+			out = uwu_uwuify_mutonly(&instance, input);
+			free(input);
+		}
+		else if (input_index == DEFAULT_INPUT_INDEX)
+		{
+			print_help(argv[0]);
+			return 1;
+		}
+		else
+		{
+			out = uwu_uwuify(&instance, argv[input_index]);
+		}
+
+		if (out == NULL)
+		{
+			uwu_perrwu(&instance, "uwuify");
+			return 3;
+		}
+
+		printf("%s\n", out);
+
+		free(out);
 	}
-
-	if (out == NULL)
-	{
-		uwu_perrwu(&instance, "uwuify");
-		return 3;
-	}
-
-	printf("%s\n", out);
-
-	free(out);
 	return ret;
 }

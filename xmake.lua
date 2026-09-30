@@ -12,7 +12,7 @@ target("libuwu")
 
 target("uwuify")
 	set_kind("binary")
-	add_files("cmd/uwuify.c")
+	add_files("cmd/uwuify/*.c")
 	add_deps("libuwu")
 	add_includedirs(".")
 
