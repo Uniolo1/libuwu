@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: Unlicense
+
 #define TESTC_H_IMPLEMENTATION
 #include "testc.h"
 
