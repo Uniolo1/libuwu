@@ -102,6 +102,9 @@ int get_items_in_replacement_dictionary(void)
 	if (instance_uwu.errwu[0] != '\0')
 		return 2;
 
+	// uwuify some test (instantly free output)
+	free(uwu_uwuify(&instance_uwu, "A uwuify uwuifies, and this tests c, E, and b !"));
+
 	char **output = NULL;
 	long len = uwu_replacement_get_items(&instance_uwu, &output);
 	if (len == -1 || output == NULL)
