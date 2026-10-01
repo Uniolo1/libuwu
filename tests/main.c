@@ -117,15 +117,15 @@ int get_items_in_replacement_dictionary(void)
 	}
 
 	puts("output[0] == 'a'");
-	if (strcmp(output[0], "a") == 0)
+	if (strcmp(output[0], "a") != 0)
 		ret = 5;
 
 	puts("output[1] == 'c'");
-	if (strcmp(output[1], "c") == 0)
+	if (strcmp(output[1], "c") != 0)
 		ret = 6;
 
 	puts("output[2] == 'e'");
-	if (strcmp(output[2], "e") == 0)
+	if (strcmp(output[2], "e") != 0)
 		ret = 7;
 
 	puts("output[3] == NULL");
