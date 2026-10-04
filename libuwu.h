@@ -22,7 +22,7 @@ typedef struct uwu_instance_internal uwu_instance_internal;
  * @brief Struct containing information, passed along to various functions, with
  * the exception of 'stutter_chance', do not modify manually.
  *
- * Must be initalized with 'uwu_init(&instance)', NEVER use an uninitalized
+ * Must be initalized with 'uwu_init(&instance)', NEVER use an uninitialized
  * instance!
  */
 typedef struct uwu_instance
@@ -59,7 +59,7 @@ extern const uint8_t uwu_number_of_default_replacements;
  * @brief Initalizes a uwu_instance.
  *
  * @param instance Pointer to a uwu_instance struct
- * @return 0 on success, 1 in failure with errwu being set (on the uninitalized
+ * @return 0 on success, 1 in failure with errwu being set (on the uninitialized
  * instance)
  */
 uint8_t uwu_init(uwu_instance *instance);
@@ -93,25 +93,25 @@ char *uwu_uwuify(uwu_instance *instance, char *input);
 char *uwu_uwuify_mutonly(uwu_instance *instance, char *input);
 
 /**
- * @brief Prints errwu information, simalarly to perror. Outputs only messsage
+ * @brief Prints errwu information, simalarly to perror. Outputs only message
  * if errwu is unset.
  *
  * @param instance Pointer to a uwu_instance struct
  * @param message Message printed before error (simalarly to perror)
  * @return Nothing is returned, function is guaranteed to succeed!
  */
-void uwu_perrwu(uwu_instance *instance, char *messsage);
+void uwu_perrwu(uwu_instance *instance, char *message);
 
 /**
- * @brief Prints errwu information, simalarly to uwu_perrwu, but outputs to stream parameter
+ * @brief Prints errwu information, similary to uwu_perrwu, but outputs to stream parameter
  * instead of stderr.
  *
  * @param stream File stream it outputs too
  * @param instance Pointer to a uwu_instance struct
- * @param message Message printed before error (simalarly to perror)
+ * @param message Message printed before error (similary to perror)
  * @return Nothing is returned, function is guaranteed to succeed!
  */
-void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage);
+void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *message);
 
 /**
  * @brief Sets the function used to generate a random number

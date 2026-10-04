@@ -61,18 +61,18 @@ void uwu_close(uwu_instance *instance)
  * has been moved to parse.c
  */
 
-void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *messsage)
+void uwu_fperrwu(FILE *stream, uwu_instance *instance, char *message)
 {
 	// basically just perror but libuwu, ensures errwu is not NULL.
-	fprintf(stream, "%s:", messsage);
+	fprintf(stream, "%s:", message);
 	if (instance->errwu != NULL)
 		fprintf(stream, " %s", instance->errwu);
 	fprintf(stream, "\n");
 }
 
-void uwu_perrwu(uwu_instance *instance, char *messsage)
+void uwu_perrwu(uwu_instance *instance, char *message)
 {
-	uwu_fperrwu(stderr, instance, messsage);
+	uwu_fperrwu(stderr, instance, message);
 }
 
 // NOTICE: next breaking release should change this to be outside the 'internal' struct,

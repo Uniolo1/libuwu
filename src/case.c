@@ -11,7 +11,7 @@ typedef enum uwu_Case
 {
 	UWU_CASE_NO_CAPS,    // the first character is not capitalized
 	UWU_CASE_FIRST_CAPS, // the first but not second character is
-	                     // capitalzied
+	                     // capitalized
 	UWU_CASE_ALL_CAPS,   // all characters are capitalized
 	UWU_CASE_DO_NOTHING, // string is null or empty
 } uwu_Case;
@@ -111,15 +111,15 @@ static bool has_non_ascii(const char *input)
 }
 
 // NOTE: mutates 'string'
-void uwu_transfer_case(const char *refrence, char **string)
+void uwu_transfer_case(const char *reference, char **string)
 {
-	if (refrence == NULL || string == NULL || *string == NULL)
+	if (reference == NULL || string == NULL || *string == NULL)
 		return;
 
 	if (has_non_ascii(*string))
 		return;
 
-	uwu_Case determined_case = determine_case(refrence);
+	uwu_Case determined_case = determine_case(reference);
 	switch (determined_case)
 	{
 	case UWU_CASE_NO_CAPS:
