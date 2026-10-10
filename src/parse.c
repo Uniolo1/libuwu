@@ -79,8 +79,8 @@ static inline char *match_and_replace_string(uwu_instance *instance, const char 
 }
 
 // AI used heavily here (see comment for char *uwu_uwuify(uwu_instance *instance, char *input))
-static inline bool ensure_output_capacity(char **output, size_t *capacity, size_t length,
-                                          size_t additional)
+static bool ensure_output_capacity(char **output, size_t *capacity, size_t length,
+                                   size_t additional)
 {
 	size_t required;
 	size_t new_capacity;
