@@ -222,14 +222,14 @@ int main(int _, char *argv[])
 
 	if (uwu_init(&instance))
 	{
-		uwu_perrwu(&instance, "Failed to initalize libuwu");
+		uwu_perrwu(&instance, "Failed to initialize libuwu");
 		return 2;
 	}
 
 	if (uwu_replacement_load_defaults(&instance))
 	{
 		uwu_perrwu(&instance, "Failed to load replacements");
-		instance.errwu = ""; // don't exit, still claer errwu
+		instance.errwu = ""; // don't exit, still clear errwu
 		ret = 4;             // return '4' later when the program ends
 	}
 
