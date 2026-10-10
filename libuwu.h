@@ -80,7 +80,7 @@ void uwu_close(uwu_instance *instance);
  * @return An uwuified malloc' string on success and NULL on error with errwu being set
  * (see uwu_perrwu)
  */
-char *uwu_uwuify(uwu_instance *instance, char *input);
+char *uwu_uwuify(uwu_instance *instance, const char *input);
 
 /**
  * @brief 'uwu_uwuify' but it avoids copying 'input', can only be used on mutable strings.

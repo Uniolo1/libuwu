@@ -260,7 +260,7 @@ exit_uwuify:
 	return *ret;
 }
 
-char *uwu_uwuify(uwu_instance *instance, char *input)
+char *uwu_uwuify(uwu_instance *instance, const char *input)
 {
 	char *input_dupe = uwu_strdup(input); // To fix a bug involving immutable input we
 	                                      // create and use an output
