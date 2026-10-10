@@ -172,7 +172,8 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 			continue;
 		}
 
-		if ((strcmp(argv[i], "--interactive") == 0) || (strcmp(argv[i], "-I") == 0))
+		if ((strcmp(argv[i], "--interactive") == 0) || (strcmp(argv[i], "-i") == 0) ||
+		    (strcmp(argv[i], "-I") == 0))
 		{
 			if (do_interactive)
 			{
