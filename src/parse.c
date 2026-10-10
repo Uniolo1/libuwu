@@ -3,6 +3,8 @@
 
 #include "parse.h"
 
+#include <complex.h>
+#include <ctype.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -45,18 +47,27 @@ uint64_t uwu_rng_next(uint64_t *state)
 	return x * UINT64_C(2685821657736338717);
 }
 
-// stuttering logic is not made for multi-byte characters
-static inline bool is_first_character_multibyte(const char *input)
+static inline bool is_first_character_a_letter_or_number(unsigned char first_character)
 {
-	unsigned char c;
-	c = (unsigned char)input[0];
+	return isalpha(first_character) || isdigit(first_character);
+}
 
-	return (c & 0x80) != 0;
+// stuttering logic is not made for multi-byte characters
+static inline bool is_first_character_multibyte(unsigned char first_character)
+{
+	return (first_character & 0x80) != 0;
 }
 
 static inline bool do_stutter(uwu_instance *instance, char *string)
 {
-	if (is_first_character_multibyte(string))
+	unsigned char first_character = (unsigned char)string[0];
+
+	// for technical reasons
+	if (is_first_character_multibyte(first_character))
+		return false;
+
+	// for appearance reasons
+	if (!is_first_character_a_letter_or_number(first_character))
 		return false;
 
 	switch (instance->stutter_chance)

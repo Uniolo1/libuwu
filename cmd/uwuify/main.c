@@ -24,7 +24,7 @@
 #include <unistd.h>
 
 static struct termios orig_termios;
-static void setup_terminal(void)
+static inline void setup_terminal(void)
 {
 	struct termios tty;
 
@@ -36,7 +36,7 @@ static void setup_terminal(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
 #else
-static void setup_terminal(void)
+static inline void setup_terminal(void)
 {
 	return;
 }
