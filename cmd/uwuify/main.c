@@ -4,6 +4,7 @@
 #include <libuwu.h>
 
 #include <errno.h>
+#include <locale.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -214,6 +215,8 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 int main(int _, char *argv[])
 {
 	int ret = 0;
+
+	setlocale(LC_ALL, "");
 	setup_terminal();
 
 	// setup signal handlers
