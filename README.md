@@ -113,4 +113,4 @@ int main(void)
 }
 ```
 
-**Keep in mind**: that this library assumes that all input is either UTF8 or ASCI encoded!
+**Keep in mind**: this library assumes that all input is either UTF8 or ASCI encoded!
