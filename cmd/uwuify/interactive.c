@@ -80,12 +80,12 @@ static size_t sof_getline(char **lineptr, size_t *n, FILE *stream)
 	if (bufptr == NULL)
 	{
 		// allocate the bufptr if it is NULL
-		bufptr = malloc(128);
+		size = 128;
+		bufptr = malloc(size);
 		if (bufptr == NULL)
 		{
 			return -1;
 		}
-		size = 128;
 	}
 	p = bufptr;
 
@@ -93,13 +93,14 @@ static size_t sof_getline(char **lineptr, size_t *n, FILE *stream)
 	{
 		if (p >= bufptr && (size_t)(p - bufptr) > size - 1)
 		{
-			size = size + 128;
+			size = size * 2;
 			bufptr = realloc(bufptr, size);
 			if (bufptr == NULL)
 			{
 				return -1;
 			}
 		}
+
 		*p++ = c;
 		if (c == '\n')
 		{

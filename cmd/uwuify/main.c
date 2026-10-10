@@ -19,9 +19,27 @@
     defined(_POSIX_VERSION)
 
 #define RUNNING_ON_POSIX
+#include <termios.h>
 #include <unistd.h>
 
-#endif
+static struct termios orig_termios;
+static void setup_terminal(void)
+{
+	struct termios tty;
+
+	tcgetattr(STDIN_FILENO, &orig_termios);
+	tty = orig_termios;
+
+	tty.c_lflag |= ICANON | ECHO;
+
+	tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+}
+#else
+static void setup_terminal(void)
+{
+	return;
+}
+#endif // RUNNING_ON_POSIX
 
 #define PID_DEFAULT 0
 static uint64_t pid = PID_DEFAULT;
@@ -195,6 +213,7 @@ static inline void parse_arguments(char *argv[], uwu_instance *instance)
 int main(int _, char *argv[])
 {
 	int ret = 0;
+	setup_terminal();
 
 	// setup signal handlers
 	signal(SIGINT, handle_keyboard_exit);
