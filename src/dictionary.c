@@ -4,9 +4,9 @@
 // HERE BE DRAGONS:
 // AI (Google search summary / Gemini) GENERATED CODE USED HEAVILY HERE!
 
-#include "dictionary.h"
+#include "h/dictionary.h"
 
-#include "case.h"
+#include "h/case.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>

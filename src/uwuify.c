@@ -1,15 +1,15 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#include "uwuify.h"
+#include "h/uwuify.h"
 
 #include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
 
-#include "dictionary.h"
-#include "parse.h"
+#include "h/dictionary.h"
+#include "h/parse.h"
 
 const char *uwu_INFO = "libuwu v2.2.1 <https://github.com/uniolo1/libuwu>";
 const uint16_t uwu_VERSION[3] = {2, 2, 1};

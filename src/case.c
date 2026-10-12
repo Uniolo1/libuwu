@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#include "case.h"
+#include "h/case.h"
 
 #include <ctype.h>
 #include <stdbool.h>

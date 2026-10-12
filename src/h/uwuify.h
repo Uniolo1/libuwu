@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Unlicense
 
 // NOTE: libuwu uses LIBUWU_H for include guards
-#include "../libuwu.h"
+#include "../../libuwu.h"
 
 // internal use only stucts
 #ifndef UWUIFY_H

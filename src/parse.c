@@ -1,16 +1,16 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: Unlicense
 
-#include "parse.h"
+#include "h/parse.h"
 
 #include <complex.h>
 #include <ctype.h>
 #include <stdint.h>
 #include <string.h>
 
-#include "case.h"
-#include "dictionary.h"
-#include "uwuify.h"
+#include "h/case.h"
+#include "h/dictionary.h"
+#include "h/uwuify.h"
 
 // replace r and l with w
 static char uwuify_char(char input)

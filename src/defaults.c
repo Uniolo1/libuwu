@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Unlicense
 
 // the header file for defaults.c is shared with uwuify.c
-#include "uwuify.h"
+#include "h/uwuify.h"
 
 #include <stdint.h>
 
-#include "dictionary.h"
+#include "h/dictionary.h"
 
 static const char *default_replace[][2] = {
     {"love", "wuv"},        {"loved", "wuved"},   {"this", "dis"}, {"small", "smol"},
