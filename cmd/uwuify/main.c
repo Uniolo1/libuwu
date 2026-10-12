@@ -232,8 +232,7 @@ int main(int _, char *argv[])
 	if (uwu_replacement_load_defaults(&instance))
 	{
 		uwu_perrwu(&instance, "Failed to load replacements");
-		instance.errwu = ""; // don't exit, still clear errwu
-		ret = 4;             // return '4' later when the program ends
+		return 4;
 	}
 
 	instance.stutter_chance = DEFAULT_STUTTER_CHANCE;
