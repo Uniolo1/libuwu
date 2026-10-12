@@ -32,7 +32,7 @@ cd ..
 And then for `uwuify` (back in the current directory)
 
 ```sh
-cc -I. -Lout cmd/uwuify.c -o out/uwuify -std=c99 -luwu
+cc -I. -Lout cmd/uwuify/*.c -o out/uwuify -std=c99 -luwu
 ```
 
 ## uwuify
